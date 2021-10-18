@@ -1,72 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
-        integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-          crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-          integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-          crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
-          integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
-          crossorigin="anonymous"></script>
-  <title>Uploadcare</title>
-  {% block stylesheets %}{% endblock %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+          integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
+            integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
+            crossorigin="anonymous"></script>
+    <title>Uploadcare</title>
+    {% block stylesheets %}{% endblock %}
 </head>
 <body class="align-items-end d-flex flex-column h-100">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 w-100">
-  <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
+    <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
 </nav>
 <div class="container-fluid">
-  <div class="row">
-    <aside class="col-sm-3">
-      {% include "menu.html" %}
-    </aside>
-    <main class="col-sm-9">
-      <div class="container w-100">
-        <h1 class="d-flex justify-content-between">{% block title %}{% endblock %}
-        </h1>
+    <div class="row">
+        <aside class="col-sm-3">
+            {% include "menu.html" %}
+        </aside>
+        <main class="col-sm-9">
+            <div class="container w-100">
+                <h1 class="d-flex justify-content-between">{% block title %}{% endblock %}
+                </h1>
 
-        {% for type,messages in app.session.flashBag.all %}
-          {% for message in messages %}
-            <div class="alert alert-{{ type }}" role="alert">
-              {{ message }}
+                {% for type,messages in app.session.flashBag.all %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {% block body %}{% endblock %}
             </div>
-          {% endfor %}
-        {% endfor %}
-
-        {% block body %}{% endblock %}
-      </div>
-    </main>
-  </div>
+        </main>
+    </div>
 </div>
 <div class="container-fluid mt-auto">
-  <div class="row border-top mt-4">
-    <div class="col-12">
-      <footer class="footer m-3 text-right">
-        © Uploadcare {% now "Y" %}
-      </footer>
+    <div class="row border-top mt-4">
+        <div class="col-12">
+            <footer class="footer m-3 text-right">
+                © Uploadcare {% now "Y" %}
+            </footer>
+        </div>
     </div>
-  </div>
 </div>
 {% block javascripts %}{% endblock %}
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-method]').forEach(aEl => {
-      aEl.addEventListener('click', e => {
-        e.preventDefault()
-        const method = e.currentTarget.dataset.method || 'GET'
-        const form = document.createElement('form')
-        form.setAttribute('action', e.currentTarget.href)
-        form.setAttribute('method', method)
-        document.getElementsByTagName('body')[0].appendChild(form)
-        form.submit()
-      })
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[data-method]').forEach(aEl => {
+            aEl.addEventListener('click', e => {
+                e.preventDefault()
+                const method = e.currentTarget.dataset.method || 'GET'
+                const form = document.createElement('form')
+                form.setAttribute('action', e.currentTarget.href)
+                form.setAttribute('method', method)
+                document.getElementsByTagName('body')[0].appendChild(form)
+                form.submit()
+            })
+        })
     })
-  })
 </script>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<h4>Image info</h4>
+
+<div class="row">
+    <div class="col-4">
+        <a href="https://ucarecdn.com/{{ file.uuid }}/-/preview/" target="_blank">
+            <img class="img-fluid img-thumbnail w-100"
+                 src="https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/800x800/"
+                 alt="{{ file.filename }}">
+        </a>
+    </div>
+    <div class="col-8">
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-hover mt-2">
+                <tr>
+                    <th>Color Mode</th>
+                    <td>{{ file.info.image_info.color_mode }}</td>
+                </tr>
+                <tr>
+                    <th>Orientation</th>
+                    <td>{{ file.info.image_info.orientation }}</td>
+                </tr>
+                <tr>
+                    <th>Format</th>
+                    <td>{{ file.info.image_info.format }}</td>
+                </tr>
+                <tr>
+                    <th>Is image a sequence</th>
+                    <td>{{ file.info.image_info.sequence|yesno }}</td>
+                </tr>
+                <tr>
+                    <th>Dimensions</th>
+                    <td>{{ file.info.image_info.width }}×{{ file.info.image_info.height }}</td>
+                </tr>
+                <tr>
+                    <th>Geo location</th>
+                    <td>
+                        {% if file.info.image_info.geo_location %}
+                            {{ file.info.image_info.geo_location.latitude }},
+                            {{ file.info.image_info.geo_location.longitude }}
+                        {% else %}
+                            No data
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>DPI</th>
+                    <td>
+                        {% if file.info.image_info.dpi %}
+                            {{ file.info.image_info.dpi.0 }}×{{ file.info.image_info.dpi.1 }}
+                        {% else %}
+                            No data
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<hr>

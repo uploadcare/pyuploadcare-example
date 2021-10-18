@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %} List files {% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            {% include 'pagination.html' %}
+        </div>
+        {% if not object_list|length %}
+            <div class="card-body">
+                <h5 class="card-title">
+                    You have no files in your project. <a href="#">Upload a file</a>.
+                </h5>
+            </div>
+        {% endif %}
+        <form method="POST" action="{% url 'files_batch_action' %}">
+            {% csrf_token %}
+            <div class="form-inline">
+                <label for="batch_action" class="col-form-label col-auto">Batch files action</label>
+                <select class="form-control col-auto" name="action">
+                    <option value="store">Store</option>
+                    <option value="delete">Delete</option>
+                </select>
+                <button class="btn btn-outline-secondary col-auto" type="submit">Submit</button>
+
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for file in object_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <input class="mr-2" type="checkbox" value="{{ file.uuid }}"
+                               name="files">
+                        {% if file.info.image_info %}
+                            <a href="{{ file.cdn_url }}" target="_blank" class="img-thumbnail mr-2">
+                                <div
+                                        style="width: 150px; height: 150px; background-image: url('https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/160x160/'); background-position: 50% 50%; background-size: cover"></div>
+                            </a>
+                        {% else %}
+                            <svg class="mr-2 img-thumbnail" style="text-anchor: middle" width="160" height="160"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 role="img" focusable="false">
+                                <rect width="100%" height="100%" fill="#868e96"></rect>
+                                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Not an image</text>
+                            </svg>
+                        {% endif %}
+                        <div class="text-place flex-grow-1 text-truncate">
+                            <a href="{% url 'file_info' file.uuid %}">{{ file.filename }}</a>
+                            <br>
+                            <div class="badge badge-secondary">{{ file.uuid }}</div>
+                            <div class="badge badge-secondary">{{ file.mime_type }}</div>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <a href="{% url 'store_file' file.uuid %}" class="btn btn-secondary btn-sm">Store</a>
+                            <a href="{% url 'delete_file' file.uuid %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+{% endblock %}

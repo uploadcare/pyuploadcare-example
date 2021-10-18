@@ -15,9 +15,21 @@ Including another URLconf
 """
 from django.urls import path
 
+from uploadcare.views.files import (
+    FileInfoView,
+    FileListView,
+    delete_file,
+    files_batch_action,
+    store_file,
+)
 from uploadcare.views.project import ProjectInfoView
 
 
 urlpatterns = [
     path("", ProjectInfoView.as_view(), name="project_info"),
+    path("files/", FileListView.as_view(), name="file_list"),
+    path("files/batch_action/", files_batch_action, name="files_batch_action"),
+    path("files/<str:file_id>/", FileInfoView.as_view(), name="file_info"),
+    path("files/<str:file_id>/store/", store_file, name="store_file"),
+    path("files/<str:file_id>/delete/", delete_file, name="delete_file"),
 ]

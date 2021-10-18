@@ -1,0 +1,64 @@
+<table class="table table-condensed table-bordered table-hover mt-2">
+    <tr>
+        <th>UUID</th>
+        <td>{{ file.uuid }}</td>
+    </tr>
+    <tr>
+        <th>Original name</th>
+        <td>{{ file.filename }}</td>
+    </tr>
+    <tr>
+        <th>Stored date</th>
+        <td>{% if file.info.datetime_stored %}{{ file.info.datetime_stored | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+        <th>Uploaded date</th>
+        <td>{% if file.info.datetime_uploaded %}{{ file.info.datetime_uploaded | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+        <th>Removed date</th>
+        <td>{% if file.info.datetime_removed %}{{ file.info.datetime_removed | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+        <th>If file an image</th>
+        <td>{{ file.info.is_image|yesno }}</td>
+    </tr>
+    <tr>
+        <th>If file ready</th>
+        <td>{{ file.info.is_ready|yesno }}</td>
+    </tr>
+    <tr>
+        <th>Mime type</th>
+        <td>
+            {{ file.mime_type }}
+            {% if 'video' in file.mime_type %}
+                <a href="#" class="btn btn-sm btn-secondary">Request video conversion</a>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Original file URL</th>
+        <td>{{ file.cdn_url }}</td>
+    </tr>
+    <tr>
+        <th>File variations</th>
+        <td>
+            {% if file.info.variations %}
+                {% for var in file.info.variations %}
+                    {{ var }}<br>
+                {% endfor %}
+            {% else %}
+                File variations is empty
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Recognition info</th>
+        <td>
+            {% if file.info.rekognition_info %}
+            {% else %}
+                Recognition info is empty
+            {% endif %}
+        </td>
+    </tr>
+</table>
