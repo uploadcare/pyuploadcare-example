@@ -16,24 +16,28 @@ Including another URLconf
 from django.urls import path
 
 from uploadcare.views.files import (
+    FileBatchActionView,
+    FileCopyView,
+    FileDeleteView,
     FileInfoView,
     FileListView,
-    delete_file,
-    files_batch_action,
-    store_file,
+    FileStoreView,
+    FileUploadView,
 )
-from uploadcare.views.groups import GroupInfoView, GroupListView, group_store
+from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView
 from uploadcare.views.project import ProjectInfoView
 
 
 urlpatterns = [
     path("", ProjectInfoView.as_view(), name="project_info"),
     path("files/", FileListView.as_view(), name="file_list"),
-    path("files/batch_action/", files_batch_action, name="files_batch_action"),
+    path("files/batch_action/", FileBatchActionView.as_view(), name="files_batch_action"),
+    path("files/upload/", FileUploadView.as_view(), name="file_upload"),
     path("files/<str:file_id>/", FileInfoView.as_view(), name="file_info"),
-    path("files/<str:file_id>/store/", store_file, name="store_file"),
-    path("files/<str:file_id>/delete/", delete_file, name="delete_file"),
+    path("files/<str:file_id>/store/", FileStoreView.as_view(), name="store_file"),
+    path("files/<str:file_id>/delete/", FileDeleteView.as_view(), name="delete_file"),
+    path("files/<str:file_id>/copy/", FileCopyView.as_view(), name="copy_file"),
     path("groups/", GroupListView.as_view(), name="group_list"),
     path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
-    path("groups/<str:group_id>/store/", group_store, name="group_store"),
+    path("groups/<str:group_id>/store/", GroupStoreView.as_view(), name="group_store"),
 ]
