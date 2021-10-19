@@ -10,8 +10,13 @@ class FileListView(ListView):
 
     def get_queryset(self):
         uploadcare = get_uploadcare_client()
-        files = uploadcare.list_files()
-        return list(files)
+        files = uploadcare.list_files(ordering="-datetime_uploaded")
+
+        # workaround: API return total=0 for demo account
+        if not files.count():
+            files._count = 100
+
+        return files
 
 
 class FileInfoView(TemplateView):
@@ -40,16 +45,31 @@ def delete_file(request, file_id):
 
 @require_POST
 def files_batch_action(request):
-    uploadcare = get_uploadcare_client()
     batch_methods = {
-        "store": uploadcare.store_files,
-        "delete": uploadcare.delete_files,
+        "store": _store_files,
+        "delete": _delete_files,
+        "create_group": _create_group,
     }
     action = request.POST["action"]
     files = request.POST.getlist("files")
-
     method = batch_methods.get(action)
-    if method:
-        method(files)
+    return method(files)
 
+
+def _store_files(files):
+    uploadcare = get_uploadcare_client()
+    uploadcare.store_files(files)
     return redirect("file_list")
+
+
+def _delete_files(files):
+    uploadcare = get_uploadcare_client()
+    uploadcare.delete_files(files)
+    return redirect("file_list")
+
+
+def _create_group(files):
+    uploadcare = get_uploadcare_client()
+    files = [uploadcare.file(file) for file in files]
+    group = uploadcare.create_file_group(files)
+    return redirect("group_info", group.id)

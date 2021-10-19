@@ -22,6 +22,7 @@ from uploadcare.views.files import (
     files_batch_action,
     store_file,
 )
+from uploadcare.views.groups import GroupInfoView, GroupListView, group_store
 from uploadcare.views.project import ProjectInfoView
 
 
@@ -32,4 +33,7 @@ urlpatterns = [
     path("files/<str:file_id>/", FileInfoView.as_view(), name="file_info"),
     path("files/<str:file_id>/store/", store_file, name="store_file"),
     path("files/<str:file_id>/delete/", delete_file, name="delete_file"),
+    path("groups/", GroupListView.as_view(), name="group_list"),
+    path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
+    path("groups/<str:group_id>/store/", group_store, name="group_store"),
 ]
