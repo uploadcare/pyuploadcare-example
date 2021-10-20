@@ -10,3 +10,9 @@ class FileUploadForm(forms.Form):
         cleaned_data = super().clean()
         if not (cleaned_data.get("file") or cleaned_data.get("url")):
             raise ValidationError("file or url required")
+
+
+class WebhookForm(forms.Form):
+    target_url = forms.URLField()
+    event = forms.ChoiceField(choices=[("file.uploaded", "file.uploaded")])
+    is_active = forms.BooleanField(required=False)

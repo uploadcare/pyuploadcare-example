@@ -26,6 +26,13 @@ from uploadcare.views.files import (
 )
 from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView
 from uploadcare.views.project import ProjectInfoView
+from uploadcare.views.webhooks import (
+    WebhookCreateView,
+    WebhookDeleteView,
+    WebhookInfoView,
+    WebhookListView,
+    WebhookUpdateView,
+)
 
 
 urlpatterns = [
@@ -40,4 +47,9 @@ urlpatterns = [
     path("groups/", GroupListView.as_view(), name="group_list"),
     path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
     path("groups/<str:group_id>/store/", GroupStoreView.as_view(), name="group_store"),
+    path("webhooks/", WebhookListView.as_view(), name="webhook_list"),
+    path("webhooks/create/", WebhookCreateView.as_view(), name="webhook_create"),
+    path("webhooks/<int:webhook_id>/", WebhookInfoView.as_view(), name="webhook_info"),
+    path("webhooks/<int:webhook_id>/update/", WebhookUpdateView.as_view(), name="webhook_update"),
+    path("webhooks/<int:webhook_id>/delete/", WebhookDeleteView.as_view(), name="webhook_delete"),
 ]
