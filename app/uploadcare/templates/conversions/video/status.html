@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Video conversion job status{% endblock %}
+
+{% block body %}
+    <div class="card">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Status:</strong> {{ job_status.status }}
+      </li>
+      <li class="list-group-item">
+        <strong>Error:</strong> {{ job_status.error}}
+      </li>
+      <li class="list-group-item">
+      <strong>Result thumbnails group:</strong>
+          {% if job_status.result.thumbnails_group_uuid %}
+              <a href="{% url 'group_info' job_status.result.thumbnails_group_uuid %}">{{ job_status.result.thumbnails_group_uuid }}</a>
+
+          {% else %}
+            --
+          {% endif %}
+      </li>
+      <li class="list-group-item">
+        <strong>Result file:</strong>
+        {% if job_status.result.uuid %}
+          <a href="{% url 'file_info'  job_status.result.uuid %}">{{ job_status.result.uuid }}</a>
+      {% else %}
+          --
+          {% endif %}
+      </li>
+    </ul>
+</div>
+{% endblock %}

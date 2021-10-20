@@ -31,9 +31,6 @@
         <th>Mime type</th>
         <td>
             {{ file.mime_type }}
-            {% if 'video' in file.mime_type %}
-                <a href="#" class="btn btn-sm btn-secondary">Request video conversion</a>
-            {% endif %}
         </td>
     </tr>
     <tr>

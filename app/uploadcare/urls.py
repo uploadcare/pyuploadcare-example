@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
+from uploadcare.views.conversions import VideoConversionJobStatusView, VideoConversionRequestView
 from uploadcare.views.files import (
     FileBatchActionView,
     FileCopyView,
@@ -52,4 +53,14 @@ urlpatterns = [
     path("webhooks/<int:webhook_id>/", WebhookInfoView.as_view(), name="webhook_info"),
     path("webhooks/<int:webhook_id>/update/", WebhookUpdateView.as_view(), name="webhook_update"),
     path("webhooks/<int:webhook_id>/delete/", WebhookDeleteView.as_view(), name="webhook_delete"),
+    path(
+        "conversions/video/request/",
+        VideoConversionRequestView.as_view(),
+        name="video_conversion_request",
+    ),
+    path(
+        "conversions/video/<str:token>/",
+        VideoConversionJobStatusView.as_view(),
+        name="video_conversion_status",
+    ),
 ]
