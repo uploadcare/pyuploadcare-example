@@ -11,7 +11,7 @@ class VideoConversionRequestView(FormView):
     template_name = "conversions/video/request.html"
     form_class = VideoConversionRequestForm
 
-    def form_valid(self, form):
+    def form_valid(self, form):  # noqa: C901
         data = form.cleaned_data
 
         transformation = VideoTransformation()
@@ -49,8 +49,8 @@ class VideoConversionRequestView(FormView):
 
         if response.problems:
             for key, value in response.problems.items():
-                messages.error(self.request, f'{key}: {value}')
-                return redirect('video_conversion_request')
+                messages.error(self.request, f"{key}: {value}")
+                return redirect("video_conversion_request")
 
         token = response.result[0].token
         return redirect("video_conversion_status", token)
