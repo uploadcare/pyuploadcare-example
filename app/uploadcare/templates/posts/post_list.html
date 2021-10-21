@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    <div class="row">
+        <div class="col">
+            Posts
+        </div>
+        <div class="col align-content-end">
+            <a class="btn btn-primary float-right" href="{% url 'post_create' %}">Add</a>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    {% for post in object_list %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="col-md-2">
+              <img class="img-thumbnail" src="{{ post.logo.cdn_url }}-/resize/x256/-/crop/256x256/center/-/quality/lightest/" alt="">
+          </div>
+          <div class="col-md-8">
+              <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+          </div>
+          <div class="col-md-2">
+              <div class="btn-group" role="group" aria-label="Actions">
+                <a href="{% url 'post_update' post.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+          </div>
+          </li>
+    {% endfor %}
+{% endblock %}
+
