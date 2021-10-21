@@ -41,7 +41,8 @@ class VideoConversionRequestView(FormView):
         if response.problems:
             for key, value in response.problems.items():
                 messages.error(self.request, f"{key}: {value}")
-                return redirect("video_conversion_request")
+
+            return redirect("video_conversion_request")
 
         token = response.result[0].token
         return redirect("video_conversion_status", token)
@@ -81,7 +82,8 @@ class DocumentConversionRequestView(FormView):
         if response.problems:
             for key, value in response.problems.items():
                 messages.error(self.request, f"{key}: {value}")
-                return redirect("document_conversion_request")
+
+            return redirect("document_conversion_request")
 
         token = response.result[0].token
         return redirect("document_conversion_status", token)
