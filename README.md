@@ -8,6 +8,15 @@ The project is based on Python 3.9 and Django 3.2.8.
   * [Without docker](#without-docker)
 * [Usage](#usage)
   * [Configuration](#configuration)
+  * [Project section](#project-section)
+  * [Files section](#files-section)
+  * [File Groups section](#file-groups-section)
+  * [Files uploading](#files-uploading)
+  * [Conversion](#conversion)
+    * [Documents conversion](#documents-conversion)
+    * [Video conversion](#video-conversion)
+  * [Webhooks](#webhooks)
+  * [Posts section](#posts-section)
 * [Useful links](#useful-links)
 
 ## Installation
@@ -90,6 +99,119 @@ These keys can be set as ENV variables using the `export` directive:
 $ export UPLOADCARE_PUBLIC_KEY=demopublickey
 $ export UPLOADCARE_SECRET_KEY=demoprivatekey
 ```
+
+### Project section
+
+You can get the project information by your public key.
+
+![Project info](./img/project_info.png)
+
+### Files section
+
+This section contains operations with files. Such as uploading, copying, storing, deleting and creating file groups.
+The page shows all the files you have on Uploadcare servers. Each file has actions, so it is possible to manage files on this page as well as on the `show` page.
+
+![Files index](./img/files_list.png)
+
+To go to the `show` page, simply click on a filename:
+
+![Show file page](./img/file_info.png)
+
+The `index` page also supports batch operations pages — batch store, batch delete, create file group from selected files.
+Just select multiple files and apply batch action.
+
+![Batch store files](./img/files_batch_actions.png)
+
+### File Groups section
+
+File Groups section provides user interface to manage file groups on Uploadcare.
+
+The `index` page shows a minimal info about each group including ID and files count.
+
+![Index groups](./img/groups_list.png)
+
+Click on a group ID, you go to the `show` group page:
+
+![Show groups](./img/group_info.png)
+
+### Files uploading
+
+To upload file, click on `Upload` button in files index page. Then click `Choose file` on the form to upload local file or input file's URL.
+
+![Upload file](./img/file_upload.png)
+
+### Conversion
+
+The application can manage documents and video conversions sending request to [Uploadcare REST API Conversion endpoints](https://uploadcare.com/api-refs/rest-api/v0.6.0/#tag/Conversion).
+
+---
+**NOTE**
+
+Remember, to convert files, your account must have this feature enabled. It means that your UPLOADCARE_PUBLIC_KEY and UPLOADCARE_SECRET_KEY (not demo keys) must be specified in environment variables. This feature is only available for paid plans.
+
+---
+
+#### Documents conversion
+
+To convert a document, go to the `Convert document` section, choose a file to convert, target format and page (if the chosen target format is `jpg` or `png` and you want to convert a single page of a multi-paged document). There is a `Store` checkbox responsible for storing files as mentioned above.
+
+![Convert document](./img/convert_document.png)
+
+After the form is submitted, you'll see a `Conversion result page`, which shows some info about conversion: `Status`, `Error` and link to the output file.
+Updating the page will refresh the status.
+
+![Convert document result](./img/document_conversion_status.png)
+
+#### Video conversion
+
+Video conversion works the same way but the form has some additional parameters to set.
+
+![Convert video](./img/convert_video.png)
+
+Conversion result page also includes information about how conversion is going.
+
+![Convert video result](./img/video_conversion_status.png)
+
+
+### Webhooks
+
+The `webhooks` section represents CRUD(create, read, update, delete) operations for Uploadcare webhooks.
+
+---
+**NOTE**
+
+Remember, to manage webhooks, your account must have this feature enabled. It means that your UPLOADCARE_PUBLIC_KEY and UPLOADCARE_SECRET_KEY (not demo keys) must be specified in environment variables. This feature is only available for paid plans.
+
+---
+
+The menu button `Webhooks` points to the webhooks list page. Each list item has `edit/delete` actions and minimal info about a webhook.
+
+![Webhooks list](./img/webhooks_list.png)
+
+Clicking on an ID of a list item redirects you to the `show` page of a webhook. Here you can find additional info and actions.
+
+![Webhook's info](./img/webhook_info.png)
+
+To create a new webhook, click the `Create a webhook` button in the menu. On the form, you should specify an URL for your webhook and check if it should be enabled immediately.
+
+![Create a webhook](./img/webhook_create.png)
+
+### Posts section
+
+This section of the application made to demonstrate view helpers that allow to place Uploadcare File Uploader widget to a Django template.
+The app has a model called Post and having fields `title`, `content`, `logo` and `attachments`. Logo and attachments represent `uploadcare.File` and `uploadcare.FileGroup` respectively.
+
+Index page for posts shows a list of posts. Each list item has `edit/delete` actions.
+
+![Posts list](./img/posts_list.png)
+
+Clicking on title will direct you to the `show` page of a post.
+
+![Show post](./img/post_show.png)
+
+To create a new post, click on the `Add` button in posts index page. The post form will be opened. The form contains a text fields for post title and content, one File Uploader — for post's logo and one — for post's attachments. These File Uploaders differ from each other by the `multiple` option. For logo it is `false`, and for attachments — `true`.
+
+![Create a post](./img/post_create.png)
 
 ## Useful links
 * [Uploadcare documentation](https://uploadcare.com/docs/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)  
