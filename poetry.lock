@@ -329,11 +329,14 @@ python-dateutil = "^2.8.2"
 pytz = "^2021.1"
 typing-extensions = "^3.10.0"
 
+[package.extras]
+django = ["Django (>=1.11)"]
+
 [package.source]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
-reference = "feature/slicable-resource-lists"
-resolved_reference = "adc320e822b21046be2371227c6c727891fcf15b"
+reference = "master"
+resolved_reference = "9397a03e3df0b87aec5c1388db6960fae180f2a5"
 
 [[package]]
 name = "regex"
@@ -408,7 +411,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "58b417985f93d15f694df63350a8a4be5b3c6515c57601a6d9cc01a12edf5190"
+content-hash = "98f082b472cbe5153be51ae4f348fd9ac28a3fe6205ed1ec4edf7be186b78c30"
 
 [metadata.files]
 anyio = [
