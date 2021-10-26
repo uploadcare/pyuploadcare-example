@@ -1,0 +1,50 @@
+<h4>Video / audio info</h4>
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-hover mt-2">
+        <tbody>
+            <tr>
+                <th>Duration</th>
+                <td>{{ file.info.video_info.duration }}</td>
+            </tr>
+            <tr>
+                <th>Format</th>
+                <td>{{ file.info.video_info.format }}</td>
+            </tr>
+            <tr>
+                <th>Bitrate</th>
+                <td>{{ file.info.video_info.bitrate }}</td>
+            </tr>
+            <tr>
+                <th>Dimensions</th>
+                <td>{{ file.info.video_info.video.width }}×{{ file.info.video_info.video.height }}</td>
+            </tr>
+            <tr>
+                <th>Frame rate</th>
+                <td>{{ file.info.video_info.video.framerate }}</td>
+            </tr>
+            <tr>
+                <th>Codec</th>
+                <td>{{ file.info.video_info.video.codec }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">Audio</th>
+            </tr>
+            <tr>
+                <th>Bitrate</th>
+                <td>{{ file.info.video_info.audio.bitrate }}</td>
+            </tr>
+            <tr>
+                <th>Codec</th>
+                <td>{{ file.info.video_info.audio.codec }}</td>
+            </tr>
+            <tr>
+                <th>Sample Rate</th>
+                <td>{{ file.info.video_info.audio.sampleRate }}</td>
+            </tr>
+            <tr>
+                <th>Channels</th>
+                <td>{{ file.info.video_info.audio.channels }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
