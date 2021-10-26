@@ -89,18 +89,20 @@ class WebhookUpdateView(FormView):
         initial["target_url"] = webhook.target_url
         initial["is_active"] = webhook.is_active
         initial["event"] = webhook.event
+        initial["signing_secret"] = webhook.signing_secret
         return initial
 
     def form_valid(self, form):
         target_url = form.cleaned_data["target_url"]
         is_active = form.cleaned_data["is_active"]
         event = form.cleaned_data["event"]
+        signing_secret = form.cleaned_data["signing_secret"]
         uploadcare = get_uploadcare_client()
         webhook_id = self.kwargs["webhook_id"]
 
         try:
             webhook = uploadcare.update_webhook(
-                webhook_id, target_url=target_url, event=event, is_active=is_active
+                webhook_id, target_url=target_url, event=event, is_active=is_active, signing_secret=signing_secret
             )
         except UploadcareException as err:
             messages.error(self.request, f'Unable to update webhook: {err}')
