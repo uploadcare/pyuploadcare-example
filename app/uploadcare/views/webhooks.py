@@ -53,10 +53,16 @@ class WebhookCreateView(FormView):
     def form_valid(self, form):
         target_url = form.cleaned_data["target_url"]
         is_active = form.cleaned_data["is_active"]
+        signing_secret = form.cleaned_data["signing_secret"]
+
         uploadcare = get_uploadcare_client()
 
+        kwargs = {}
+        if signing_secret:
+            kwargs['signing_secret'] = signing_secret
+
         try:
-            webhook = uploadcare.create_webhook(target_url=target_url, is_active=is_active)
+            webhook = uploadcare.create_webhook(target_url=target_url, is_active=is_active, **kwargs)
         except UploadcareException as err:
             messages.error(self.request, f'Unable to create webhook: {err}')
             return redirect("webhook_list")

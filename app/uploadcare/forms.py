@@ -23,6 +23,7 @@ class WebhookForm(forms.Form):
     target_url = forms.URLField()
     event = forms.ChoiceField(choices=[("file.uploaded", "file.uploaded")])
     is_active = forms.BooleanField(required=False)
+    signing_secret = forms.CharField(required=False)
 
 
 class VideoConversionRequestForm(forms.Form):

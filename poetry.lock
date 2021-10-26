@@ -336,7 +336,7 @@ django = ["Django (>=1.11)"]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
 reference = "fix/upload-url"
-resolved_reference = "adf34b333e0296a487967ac5123ec7104bb86163"
+resolved_reference = "8a370d52646c68ce086a27672119eb38dd2264ac"
 
 [[package]]
 name = "regex"
