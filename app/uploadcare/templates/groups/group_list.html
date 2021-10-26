@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Groups list{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            {% include 'pagination.html' %}
+        </div>
+        {% if not object_list|length %}
+            <div class="card-body">
+                <h5 class="card-title">
+                    You have no groups in your project
+                </h5>
+            </div>
+        {% endif %}
+        <ul class="list-group list-group-flush">
+            {% for group in object_list %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="text-place flex-grow-1 text-truncate">
+                        <a href="{% url 'group_info' group.id %}">{{ group.id }}</a>
+                    </div>
+                    <div class="badge badge-secondary">{{ group.info.files_count }} files</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

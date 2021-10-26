@@ -7,7 +7,7 @@ authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Django = "^3.2.8"
-pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "feature/secure-delivery"}
+pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "feature/slicable-resource-lists"}
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
