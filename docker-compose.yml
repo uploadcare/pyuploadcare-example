@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+
+  uploadcare:
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"

@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "pyuploadcare-example"
+version = "0.1.0"
+description = "Example project for Python library for Uploadcare.com"
+authors = ["Uploadcare Inc <hello@uploadcare.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.2.8"
+pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "feature/secure-delivery"}
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+mypy = "^0.910"
+black = "^21.9b0"
+isort = "^5.9.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py36']
+exclude = '''
+(
+  \.eggs
+  |\.git
+  |\.hg
+  |\.mypy_cache
+  |\.nox
+  |\.tox
+  |\.venv
+  |_build
+  |buck-out
+  |build
+  |dist
+)
+'''
+
+[tool.isort]
+line_length = 100
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+multi_line_output = 3
+src_paths = "app"
+include_trailing_comma = "true"
+lines_after_imports = 2
