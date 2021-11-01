@@ -3,6 +3,7 @@
 {% url 'group_list' as group_list %}
 {% url 'group_create' as group_create %}
 {% url 'webhook_list' as webhook_list %}
+{% url 'video_conversion_request' as video_conversion_request %}
 
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
@@ -20,7 +21,7 @@
     <li class="dropdown-divider"></li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">Convert document</a>
+        <a class="nav-link {% if request.path == video_conversion_request %} active {% endif %}" href="{{ video_conversion_request }}">Convert video</a>
     </li>
 
     <li class="dropdown-divider"></li>

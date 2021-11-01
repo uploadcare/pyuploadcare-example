@@ -8,6 +8,7 @@ authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 python = "^3.9"
 Django = "^3.2.8"
 pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "feature/slicable-resource-lists"}
+django-crispy-forms = "^1.13.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"

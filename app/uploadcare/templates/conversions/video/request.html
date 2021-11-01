@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Convert video{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.file|as_crispy_field }}
+                </div>
+                <div class="mb-3">
+                    {{ form.format|as_crispy_field }}
+                </div>
+                <div class="mb-3">
+                    {{ form.quality|as_crispy_field }}
+                </div>
+                <div class="mb-3">
+                    <label class="mb-0" for="page">Size</label>
+                    <div class="row">
+                        <div class="col-4">
+                            {{ form.resize_mode|as_crispy_field }}
+                        </div>
+                        <div class="col-4">
+                            {{ form.width|as_crispy_field }}
+                            <hint class="text-muted font-size">must be divisible by 4</hint>
+                        </div>
+                        <div class="col-4">
+                            {{ form.height|as_crispy_field }}
+                            <hint class="text-muted font-size">must be divisible by 4</hint>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-0" for="page">Cut</label>
+                    <div class="row">
+                        <div class="col-4">
+                            {{ form.start_time|as_crispy_field }}
+                        </div>
+                        <div class="col-4">
+                            {{ form.length|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form.thumbs|as_crispy_field }}
+                </div>
+                <div class="mb-3">
+                    {{ form.store|as_crispy_field }}
+                </div>
+                <button class="btn btn-primary" type="submit">Convert</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
