@@ -3,6 +3,9 @@ from django.core.exceptions import ValidationError
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
+from pyuploadcare.dj.forms import ImageField, FileGroupField, FileWidget
+
+from uploadcare.models import Post
 
 
 class FileUploadForm(forms.Form):
@@ -72,3 +75,12 @@ class DocumentConversionRequestForm(forms.Form):
         uploadcare = get_uploadcare_client()
         files = uploadcare.list_files(ordering="-datetime_uploaded", limit=100)
         self.fields["file"].choices = [(file.uuid, file.filename) for file in files]
+
+
+class PostForm(forms.ModelForm):
+    logo = ImageField()
+    attachments = FileGroupField(required=False)
+
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'logo', 'attachments']

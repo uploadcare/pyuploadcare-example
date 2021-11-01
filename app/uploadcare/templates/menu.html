@@ -5,6 +5,7 @@
 {% url 'webhook_list' as webhook_list %}
 {% url 'video_conversion_request' as video_conversion_request %}
 {% url 'document_conversion_request' as document_conversion_request %}
+{% url 'post_list' as post_list %}
 
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
@@ -28,4 +29,8 @@
         <a class="nav-link {% if request.path == document_conversion_request %} active {% endif %}" href="{{ document_conversion_request }}">Convert document</a>
     </li>
     <li class="dropdown-divider"></li>
+
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == post_list %} active {% endif %}" href="{{ post_list }}">Posts</a>
+    </li>
 </ul>
