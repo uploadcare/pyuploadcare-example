@@ -335,8 +335,8 @@ django = ["Django (>=1.11)"]
 [package.source]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
-reference = "fix/webhook-update"
-resolved_reference = "78161bea2f92b2bddefe8f29743b4594844506e6"
+reference = "master"
+resolved_reference = "9397a03e3df0b87aec5c1388db6960fae180f2a5"
 
 [[package]]
 name = "regex"
@@ -411,7 +411,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "441f3812e1df230f8b0554f05ef9133f4c374a51687a3b0a94e8154f1c88e5b2"
+content-hash = "98f082b472cbe5153be51ae4f348fd9ac28a3fe6205ed1ec4edf7be186b78c30"
 
 [metadata.files]
 anyio = [
