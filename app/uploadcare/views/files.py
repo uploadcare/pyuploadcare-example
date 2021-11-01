@@ -89,13 +89,15 @@ class FileUploadView(FormView):
     def form_valid(self, form):
         file = form.cleaned_data["file"]
         url = form.cleaned_data["url"]
+        store = form.cleaned_data["store"]
+
         uploadcare = get_uploadcare_client()
 
         try:
             if file:
-                file = uploadcare.upload(file, size=file.size)
+                file = uploadcare.upload(file, size=file.size, store=store)
             else:
-                file = uploadcare.upload(url)
+                file = uploadcare.upload(url, store=store)
         except UploadcareException as err:
             messages.error(self.request, f'Unable to upload file: {err}')
             return redirect("file_list")

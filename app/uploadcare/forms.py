@@ -11,6 +11,7 @@ from uploadcare.models import Post
 class FileUploadForm(forms.Form):
     file = forms.FileField(required=False)
     url = forms.URLField(required=False)
+    store = forms.BooleanField(required=False)
 
     def clean(self):
         cleaned_data = super().clean()
