@@ -8,7 +8,7 @@ authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 python = "^3.9"
 Django = "^3.2.8"
 django-crispy-forms = "^1.13.0"
-pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "fix/upload-url"}
+pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "master"}
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"

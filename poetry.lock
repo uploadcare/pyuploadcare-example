@@ -335,8 +335,8 @@ django = ["Django (>=1.11)"]
 [package.source]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
-reference = "fix/upload-url"
-resolved_reference = "adf34b333e0296a487967ac5123ec7104bb86163"
+reference = "master"
+resolved_reference = "9397a03e3df0b87aec5c1388db6960fae180f2a5"
 
 [[package]]
 name = "regex"
@@ -411,7 +411,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e020347b0b4c3c7491b133dd5b054300f0231445fa709adefcdb2f02cad6d69b"
+content-hash = "98f082b472cbe5153be51ae4f348fd9ac28a3fe6205ed1ec4edf7be186b78c30"
 
 [metadata.files]
 anyio = [
