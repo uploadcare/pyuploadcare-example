@@ -2,6 +2,7 @@
 {% url 'file_list' as file_list %}
 {% url 'group_list' as group_list %}
 {% url 'group_create' as group_create %}
+{% url 'webhook_list' as webhook_list %}
 
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
@@ -13,7 +14,9 @@
     <li class="nav-item">
         <a class="nav-link {% if request.path == group_list %} active {% endif %}" href="{{ group_list }}">Groups</a>
     </li>
-
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == webhook_list %} active {% endif %}" href="{{ webhook_list }}">Webhooks</a>
+    </li>
     <li class="dropdown-divider"></li>
 
     <li class="nav-item">
@@ -21,11 +24,4 @@
     </li>
 
     <li class="dropdown-divider"></li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">List of project webhooks</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Create new webhook</a>
-    </li>
 </ul>

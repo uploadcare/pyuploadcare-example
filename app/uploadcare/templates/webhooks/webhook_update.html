@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Update webhook {{ webhook.id }}{% endblock %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+    </div>
+  </div>
+{% endblock %}
