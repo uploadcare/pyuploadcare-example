@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
-from uploadcare.views.conversions import VideoConversionJobStatusView, VideoConversionRequestView
+from uploadcare.views.conversions import (
+    DocumentConversionJobStatusView,
+    DocumentConversionRequestView,
+    VideoConversionJobStatusView,
+    VideoConversionRequestView,
+)
 from uploadcare.views.files import (
     FileBatchActionView,
     FileCopyView,
@@ -62,5 +67,15 @@ urlpatterns = [
         "conversions/video/<str:token>/",
         VideoConversionJobStatusView.as_view(),
         name="video_conversion_status",
+    ),
+    path(
+        "conversions/document/request/",
+        DocumentConversionRequestView.as_view(),
+        name="document_conversion_request",
+    ),
+    path(
+        "conversions/document/<str:token>/",
+        DocumentConversionJobStatusView.as_view(),
+        name="document_conversion_status",
     ),
 ]

@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from pyuploadcare.dj.client import get_uploadcare_client
+from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
 
 
@@ -23,33 +24,15 @@ class WebhookForm(forms.Form):
 class VideoConversionRequestForm(forms.Form):
     file = forms.ChoiceField()
     format = forms.ChoiceField(
-        choices=[
-            ("", ""),
-            (VideoFormat.webm, VideoFormat.webm),
-            (VideoFormat.mp4, VideoFormat.mp4),
-            (VideoFormat.ogg, VideoFormat.ogg),
-        ],
+        choices=[("", "")] + [(key, key) for key in VideoFormat],
         required=False,
     )
     quality = forms.ChoiceField(
-        choices=[
-            ("", ""),
-            (Quality.normal, Quality.normal),
-            (Quality.better, Quality.better),
-            (Quality.best, Quality.best),
-            (Quality.lighter, Quality.lighter),
-            (Quality.lightest, Quality.lightest),
-        ],
+        choices=[("", "")] + [(key, key) for key in Quality],
         required=False,
     )
     resize_mode = forms.ChoiceField(
-        choices=[
-            ("", ""),
-            (ResizeMode.preserve_ratio, ResizeMode.preserve_ratio),
-            (ResizeMode.change_ratio, ResizeMode.change_ratio),
-            (ResizeMode.scale_crop, ResizeMode.scale_crop),
-            (ResizeMode.add_padding, ResizeMode.add_padding),
-        ],
+        choices=[("", "")] + [(key, key) for key in ResizeMode],
         required=False,
     )
     width = forms.IntegerField(required=False)
@@ -66,6 +49,22 @@ class VideoConversionRequestForm(forms.Form):
     # Thumbs
     thumbs = forms.IntegerField(required=False)
 
+    store = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uploadcare = get_uploadcare_client()
+        files = uploadcare.list_files(ordering="-datetime_uploaded", limit=100)
+        self.fields["file"].choices = [(file.uuid, file.filename) for file in files]
+
+
+class DocumentConversionRequestForm(forms.Form):
+    file = forms.ChoiceField()
+    format = forms.ChoiceField(
+        choices=[("", "")] + [(key, key) for key in DocumentFormat],
+        required=False,
+    )
+    page = forms.IntegerField(required=False)
     store = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
