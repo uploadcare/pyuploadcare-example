@@ -1,8 +1,6 @@
 from django.contrib import messages
 from django.views.generic import TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
-
-
 from pyuploadcare.exceptions import UploadcareException
 
 
@@ -15,7 +13,7 @@ class ProjectInfoView(TemplateView):
         try:
             kwargs["project"] = uploadcare.get_project_info()
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get project info: {err}')
+            messages.error(self.request, f"Unable to get project info: {err}")
             kwargs["project"] = None
 
         return kwargs

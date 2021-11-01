@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from pyuploadcare.dj.client import get_uploadcare_client
+from pyuploadcare.dj.forms import FileGroupField, ImageField
 from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
-from pyuploadcare.dj.forms import ImageField, FileGroupField
 
 from uploadcare.models import Post
 
@@ -85,4 +85,4 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'logo', 'attachments']
+        fields = ["title", "content", "logo", "attachments"]

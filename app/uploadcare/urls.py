@@ -31,7 +31,13 @@ from uploadcare.views.files import (
     FileUploadView,
 )
 from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView
-from uploadcare.views.posts import PostListView, PostCreateView, PostUpdateView, PostDetailView, PostDeleteView
+from uploadcare.views.posts import (
+    PostCreateView,
+    PostDeleteView,
+    PostDetailView,
+    PostListView,
+    PostUpdateView,
+)
 from uploadcare.views.project import ProjectInfoView
 from uploadcare.views.webhooks import (
     WebhookCreateView,
@@ -79,9 +85,9 @@ urlpatterns = [
         DocumentConversionJobStatusView.as_view(),
         name="document_conversion_status",
     ),
-    path('posts/', PostListView.as_view(), name='post_list'),
-    path('posts/create/', PostCreateView.as_view(), name='post_create'),
-    path('posts/<pk>/edit/', PostUpdateView.as_view(), name="post_update"),
-    path('posts/<pk>/delete/', PostDeleteView.as_view(), name="post_delete"),
-    path('posts/<pk>/', PostDetailView.as_view(), name="post_detail"),
+    path("posts/", PostListView.as_view(), name="post_list"),
+    path("posts/create/", PostCreateView.as_view(), name="post_create"),
+    path("posts/<pk>/edit/", PostUpdateView.as_view(), name="post_update"),
+    path("posts/<pk>/delete/", PostDeleteView.as_view(), name="post_delete"),
+    path("posts/<pk>/", PostDetailView.as_view(), name="post_detail"),
 ]
