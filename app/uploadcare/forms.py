@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
-from pyuploadcare.dj.forms import ImageField, FileGroupField, FileWidget
+from pyuploadcare.dj.forms import ImageField, FileGroupField
 
 from uploadcare.models import Post
 

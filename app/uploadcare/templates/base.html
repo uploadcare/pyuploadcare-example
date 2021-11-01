@@ -20,6 +20,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 w-100">
     <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
 </nav>
+{% if messages %}
+    <div style="position: absolute; top: 10px; right: 10px; z-index: 9999">
+        {% for message in messages %}
+            <div class="toast" role="alert" data-autohide="false">
+              <div class="toast-header">
+                  <strong class="mr-auto text-primary"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body">
+                {{ message }}
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 <div class="container-fluid">
     <div class="row">
         <aside class="col-sm-3">
@@ -29,11 +46,6 @@
             <div class="container w-100">
                 <h1 class="d-flex justify-content-between">{% block title %}{% endblock %}
                 </h1>
-                {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {{ message.tags }}" role="alert">{{ message }}</div>
-                        {% endfor %}
-                {% endif %}
                 {% block body %}{% endblock %}
             </div>
         </main>
@@ -63,6 +75,11 @@
             })
         })
     })
+
+$(document).ready(function(){
+  $('.toast').toast('show');
+});
+
 </script>
 </body>
 </html>

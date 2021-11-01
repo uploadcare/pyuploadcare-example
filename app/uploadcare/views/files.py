@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import FormView, ListView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
+from pyuploadcare.exceptions import UploadcareException
 
 from uploadcare.forms import FileUploadForm
 
@@ -12,11 +14,15 @@ class FileListView(ListView):
 
     def get_queryset(self):
         uploadcare = get_uploadcare_client()
-        files = uploadcare.list_files(ordering="-datetime_uploaded")
 
-        # workaround: API return total=0 for demo account
-        if not files.count():
-            files._count = 100
+        try:
+            files = uploadcare.list_files(ordering="-datetime_uploaded")
+            # workaround: API return total=0 for demo account
+            if not files.count():
+                files._count = 100
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to get files: {err}')
+            return []
 
         return files
 
@@ -27,31 +33,52 @@ class FileInfoView(TemplateView):
     def get_context_data(self, **kwargs):
         uploadcare = get_uploadcare_client()
         file_id = self.kwargs["file_id"]
-        kwargs["file"] = uploadcare.file(file_id)
+
+        try:
+            kwargs["file"] = uploadcare.file(file_id)
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to get file: {err}')
+
         return kwargs
 
 
 class FileStoreView(View):
     def get(self, request, file_id):
         uploadcare = get_uploadcare_client()
-        file = uploadcare.file(file_id)
-        file.store()
+
+        try:
+            file = uploadcare.file(file_id)
+            file.store()
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to store file: {err}')
+
         return redirect("file_list")
 
 
 class FileDeleteView(View):
     def get(self, request, file_id):
         uploadcare = get_uploadcare_client()
-        file = uploadcare.file(file_id)
-        file.delete()
+
+        try:
+            file = uploadcare.file(file_id)
+            file.delete()
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to delete file: {err}')
+
         return redirect("file_list")
 
 
 class FileCopyView(View):
     def get(self, request, file_id):
         uploadcare = get_uploadcare_client()
-        file = uploadcare.file(file_id)
-        new_file = file.create_local_copy()
+
+        try:
+            file = uploadcare.file(file_id)
+            new_file = file.create_local_copy()
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to copy file: {err}')
+            return redirect("file_list")
+
         return redirect("file_info", new_file.uuid)
 
 
@@ -64,10 +91,14 @@ class FileUploadView(FormView):
         url = form.cleaned_data["url"]
         uploadcare = get_uploadcare_client()
 
-        if file:
-            file = uploadcare.upload(file, size=file.size)
-        else:
-            file = uploadcare.upload(url)
+        try:
+            if file:
+                file = uploadcare.upload(file, size=file.size)
+            else:
+                file = uploadcare.upload(url)
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to upload file: {err}')
+            return redirect("file_list")
 
         return redirect("file_info", file.uuid)
 
@@ -82,7 +113,13 @@ class FileBatchActionView(View):
         action = request.POST["action"]
         files = request.POST.getlist("files")
         uploadcare = get_uploadcare_client()
-        method = batch_methods[action]
+
+        try:
+            method = batch_methods[action]
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to perform action: {err}')
+            return redirect("file_list")
+
         return method(uploadcare, files)
 
     def _store_files(self, uploadcare, files):

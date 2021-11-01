@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import FormView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
+from pyuploadcare.exceptions import UploadcareException
 from pyuploadcare.transformations.document import DocumentTransformation
 from pyuploadcare.transformations.video import VideoTransformation
 
@@ -36,7 +37,12 @@ class VideoConversionRequestView(FormView):
 
         file_id = data["file"]
         path = transformation.path(file_id)
-        response = uploadcare.video_convert_api.convert([path], store=data["store"])
+
+        try:
+            response = uploadcare.video_convert_api.convert([path], store=data["store"])
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to convert video: {err}')
+            return redirect("video_conversion_request")
 
         if response.problems:
             for key, value in response.problems.items():
@@ -54,7 +60,10 @@ class VideoConversionJobStatusView(TemplateView):
     def get_context_data(self, **kwargs):
         token = self.kwargs["token"]
         uploadcare = get_uploadcare_client()
-        kwargs["job_status"] = uploadcare.video_convert_api.status(token)
+        try:
+            kwargs["job_status"] = uploadcare.video_convert_api.status(token)
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to get job status: {err}')
         return kwargs
 
 
@@ -77,7 +86,12 @@ class DocumentConversionRequestView(FormView):
 
         file_id = data["file"]
         path = transformation.path(file_id)
-        response = uploadcare.document_convert_api.convert([path], store=data["store"])
+
+        try:
+            response = uploadcare.document_convert_api.convert([path], store=data["store"])
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to convert document: {err}')
+            return redirect("document_conversion_request")
 
         if response.problems:
             for key, value in response.problems.items():
@@ -95,5 +109,10 @@ class DocumentConversionJobStatusView(TemplateView):
     def get_context_data(self, **kwargs):
         token = self.kwargs["token"]
         uploadcare = get_uploadcare_client()
-        kwargs["job_status"] = uploadcare.document_convert_api.status(token)
+
+        try:
+            kwargs["job_status"] = uploadcare.document_convert_api.status(token)
+        except UploadcareException as err:
+            messages.error(self.request, f'Unable to get job status: {err}')
+
         return kwargs
