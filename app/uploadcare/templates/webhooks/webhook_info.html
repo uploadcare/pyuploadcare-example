@@ -29,6 +29,9 @@
           <div class="badge badge-secondary">Not active</div>
         {% endif %}
       </li>
+      <li class="list-group-item">
+        <strong>Signing secret</strong>: {{ webhook.signing_secret|default:"--"}}
+      </li>
     </ul>
   </div>
 {% endblock %}

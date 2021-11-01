@@ -41,7 +41,7 @@ class VideoConversionRequestView(FormView):
         try:
             response = uploadcare.video_convert_api.convert([path], store=data["store"])
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to convert video: {err}')
+            messages.error(self.request, f"Unable to convert video: {err}")
             return redirect("video_conversion_request")
 
         if response.problems:
@@ -63,7 +63,7 @@ class VideoConversionJobStatusView(TemplateView):
         try:
             kwargs["job_status"] = uploadcare.video_convert_api.status(token)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get job status: {err}')
+            messages.error(self.request, f"Unable to get job status: {err}")
         return kwargs
 
 
@@ -90,7 +90,7 @@ class DocumentConversionRequestView(FormView):
         try:
             response = uploadcare.document_convert_api.convert([path], store=data["store"])
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to convert document: {err}')
+            messages.error(self.request, f"Unable to convert document: {err}")
             return redirect("document_conversion_request")
 
         if response.problems:
@@ -113,6 +113,6 @@ class DocumentConversionJobStatusView(TemplateView):
         try:
             kwargs["job_status"] = uploadcare.document_convert_api.status(token)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get job status: {err}')
+            messages.error(self.request, f"Unable to get job status: {err}")
 
         return kwargs

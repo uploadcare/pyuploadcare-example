@@ -21,7 +21,7 @@ class FileListView(ListView):
             if not files.count():
                 files._count = 100
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get files: {err}')
+            messages.error(self.request, f"Unable to get files: {err}")
             return []
 
         return files
@@ -37,7 +37,7 @@ class FileInfoView(TemplateView):
         try:
             kwargs["file"] = uploadcare.file(file_id)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get file: {err}')
+            messages.error(self.request, f"Unable to get file: {err}")
 
         return kwargs
 
@@ -50,7 +50,7 @@ class FileStoreView(View):
             file = uploadcare.file(file_id)
             file.store()
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to store file: {err}')
+            messages.error(self.request, f"Unable to store file: {err}")
 
         return redirect("file_list")
 
@@ -63,7 +63,7 @@ class FileDeleteView(View):
             file = uploadcare.file(file_id)
             file.delete()
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to delete file: {err}')
+            messages.error(self.request, f"Unable to delete file: {err}")
 
         return redirect("file_list")
 
@@ -76,7 +76,7 @@ class FileCopyView(View):
             file = uploadcare.file(file_id)
             new_file = file.create_local_copy()
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to copy file: {err}')
+            messages.error(self.request, f"Unable to copy file: {err}")
             return redirect("file_list")
 
         return redirect("file_info", new_file.uuid)
@@ -99,7 +99,7 @@ class FileUploadView(FormView):
             else:
                 file = uploadcare.upload(url, store=store)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to upload file: {err}')
+            messages.error(self.request, f"Unable to upload file: {err}")
             return redirect("file_list")
 
         return redirect("file_info", file.uuid)
@@ -119,7 +119,7 @@ class FileBatchActionView(View):
         try:
             method = batch_methods[action]
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to perform action: {err}')
+            messages.error(self.request, f"Unable to perform action: {err}")
             return redirect("file_list")
 
         return method(uploadcare, files)

@@ -25,7 +25,7 @@ class GroupInfoView(TemplateView):
         try:
             kwargs["group"] = uploadcare.file_group(group_id)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get group: {err}')
+            messages.error(self.request, f"Unable to get group: {err}")
 
         return kwargs
 
@@ -38,6 +38,6 @@ class GroupStoreView(View):
             group = uploadcare.file_group(group_id)
             group.store()
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to store group: {err}')
+            messages.error(self.request, f"Unable to store group: {err}")
 
         return redirect("group_info", group_id)

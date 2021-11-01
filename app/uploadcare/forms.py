@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from pyuploadcare.dj.client import get_uploadcare_client
+from pyuploadcare.dj.forms import FileGroupField, ImageField
 from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
-from pyuploadcare.dj.forms import ImageField, FileGroupField
 
 from uploadcare.models import Post
 
@@ -23,6 +23,7 @@ class WebhookForm(forms.Form):
     target_url = forms.URLField()
     event = forms.ChoiceField(choices=[("file.uploaded", "file.uploaded")])
     is_active = forms.BooleanField(required=False)
+    signing_secret = forms.CharField(required=False)
 
 
 class VideoConversionRequestForm(forms.Form):
@@ -84,4 +85,4 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'logo', 'attachments']
+        fields = ["title", "content", "logo", "attachments"]

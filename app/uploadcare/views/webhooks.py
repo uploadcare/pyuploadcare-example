@@ -18,7 +18,7 @@ class WebhookListView(ListView):
         try:
             return list(uploadcare.list_webhooks())
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get webhooks: {err}')
+            messages.error(self.request, f"Unable to get webhooks: {err}")
             return []
 
 
@@ -29,7 +29,7 @@ class WebhookInfoView(TemplateView):
         try:
             kwargs["webhook"] = get_webhook(self.kwargs["webhook_id"])
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get webhook: {err}')
+            messages.error(self.request, f"Unable to get webhook: {err}")
 
         return kwargs
 
@@ -41,7 +41,7 @@ class WebhookDeleteView(View):
         try:
             uploadcare.delete_webhook(webhook_id)
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to delete webhooks: {err}')
+            messages.error(self.request, f"Unable to delete webhooks: {err}")
 
         return redirect("webhook_list")
 
@@ -53,12 +53,20 @@ class WebhookCreateView(FormView):
     def form_valid(self, form):
         target_url = form.cleaned_data["target_url"]
         is_active = form.cleaned_data["is_active"]
+        signing_secret = form.cleaned_data["signing_secret"]
+
         uploadcare = get_uploadcare_client()
 
+        kwargs = {}
+        if signing_secret:
+            kwargs["signing_secret"] = signing_secret
+
         try:
-            webhook = uploadcare.create_webhook(target_url=target_url, is_active=is_active)
+            webhook = uploadcare.create_webhook(
+                target_url=target_url, is_active=is_active, **kwargs
+            )
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to create webhook: {err}')
+            messages.error(self.request, f"Unable to create webhook: {err}")
             return redirect("webhook_list")
 
         return redirect("webhook_info", webhook.id)
@@ -74,7 +82,7 @@ class WebhookUpdateView(FormView):
         try:
             webhook = get_webhook(self.kwargs["webhook_id"])
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to get webhook: {err}')
+            messages.error(self.request, f"Unable to get webhook: {err}")
             return initial
 
         if not webhook:
@@ -83,21 +91,27 @@ class WebhookUpdateView(FormView):
         initial["target_url"] = webhook.target_url
         initial["is_active"] = webhook.is_active
         initial["event"] = webhook.event
+        initial["signing_secret"] = webhook.signing_secret
         return initial
 
     def form_valid(self, form):
         target_url = form.cleaned_data["target_url"]
         is_active = form.cleaned_data["is_active"]
         event = form.cleaned_data["event"]
+        signing_secret = form.cleaned_data["signing_secret"]
         uploadcare = get_uploadcare_client()
         webhook_id = self.kwargs["webhook_id"]
 
         try:
             webhook = uploadcare.update_webhook(
-                webhook_id, target_url=target_url, event=event, is_active=is_active
+                webhook_id,
+                target_url=target_url,
+                event=event,
+                is_active=is_active,
+                signing_secret=signing_secret,
             )
         except UploadcareException as err:
-            messages.error(self.request, f'Unable to update webhook: {err}')
+            messages.error(self.request, f"Unable to update webhook: {err}")
             return redirect("webhook_list")
 
         return redirect("webhook_info", webhook.id)
