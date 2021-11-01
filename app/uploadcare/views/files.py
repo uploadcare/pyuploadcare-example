@@ -1,7 +1,9 @@
 from django.shortcuts import redirect
-from django.views.decorators.http import require_POST
-from django.views.generic import ListView, TemplateView
+from django.views import View
+from django.views.generic import FormView, ListView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
+
+from uploadcare.forms import FileUploadForm
 
 
 class FileListView(ListView):
@@ -29,47 +31,69 @@ class FileInfoView(TemplateView):
         return kwargs
 
 
-def store_file(request, file_id):
-    uploadcare = get_uploadcare_client()
-    file = uploadcare.file(file_id)
-    file.store()
-    return redirect("file_list")
+class FileStoreView(View):
+    def get(self, request, file_id):
+        uploadcare = get_uploadcare_client()
+        file = uploadcare.file(file_id)
+        file.store()
+        return redirect("file_list")
 
 
-def delete_file(request, file_id):
-    uploadcare = get_uploadcare_client()
-    file = uploadcare.file(file_id)
-    file.delete()
-    return redirect("file_list")
+class FileDeleteView(View):
+    def get(self, request, file_id):
+        uploadcare = get_uploadcare_client()
+        file = uploadcare.file(file_id)
+        file.delete()
+        return redirect("file_list")
 
 
-@require_POST
-def files_batch_action(request):
-    batch_methods = {
-        "store": _store_files,
-        "delete": _delete_files,
-        "create_group": _create_group,
-    }
-    action = request.POST["action"]
-    files = request.POST.getlist("files")
-    method = batch_methods.get(action)
-    return method(files)
+class FileCopyView(View):
+    def get(self, request, file_id):
+        uploadcare = get_uploadcare_client()
+        file = uploadcare.file(file_id)
+        new_file = file.create_local_copy()
+        return redirect("file_info", new_file.uuid)
 
 
-def _store_files(files):
-    uploadcare = get_uploadcare_client()
-    uploadcare.store_files(files)
-    return redirect("file_list")
+class FileUploadView(FormView):
+    template_name = "files/file_upload.html"
+    form_class = FileUploadForm
+
+    def form_valid(self, form):
+        file = form.cleaned_data["file"]
+        url = form.cleaned_data["url"]
+        uploadcare = get_uploadcare_client()
+
+        if file:
+            file = uploadcare.upload(file, size=file.size)
+        else:
+            file = uploadcare.upload(url)
+
+        return redirect("file_info", file.uuid)
 
 
-def _delete_files(files):
-    uploadcare = get_uploadcare_client()
-    uploadcare.delete_files(files)
-    return redirect("file_list")
+class FileBatchActionView(View):
+    def post(self, request):
+        batch_methods = {
+            "store": self._store_files,
+            "delete": self._delete_files,
+            "create_group": self._create_group,
+        }
+        action = request.POST["action"]
+        files = request.POST.getlist("files")
+        uploadcare = get_uploadcare_client()
+        method = batch_methods[action]
+        return method(uploadcare, files)
 
+    def _store_files(self, uploadcare, files):
+        uploadcare.store_files(files)
+        return redirect("file_list")
 
-def _create_group(files):
-    uploadcare = get_uploadcare_client()
-    files = [uploadcare.file(file) for file in files]
-    group = uploadcare.create_file_group(files)
-    return redirect("group_info", group.id)
+    def _delete_files(self, uploadcare, files):
+        uploadcare.delete_files(files)
+        return redirect("file_list")
+
+    def _create_group(self, uploadcare, files):
+        files = [uploadcare.file(file) for file in files]
+        group = uploadcare.create_file_group(files)
+        return redirect("group_info", group.id)

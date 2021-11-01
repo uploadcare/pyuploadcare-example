@@ -1,18 +1,19 @@
 {% extends "base.html" %}
-{% block title %} List files {% endblock %}
-
+{% block title %}
+    <div class="row">
+        <div class="col">
+            Files
+        </div>
+        <div class="col align-content-end">
+            <a class="btn btn-primary float-right" href="{% url 'file_upload' %}">Upload</a>
+        </div>
+    </div>
+{% endblock %}
 {% block body %}
     <div class="card">
         <div class="card-body">
             {% include 'pagination.html' %}
         </div>
-        {% if not object_list|length %}
-            <div class="card-body">
-                <h5 class="card-title">
-                    You have no files in your project. <a href="#">Upload a file</a>.
-                </h5>
-            </div>
-        {% endif %}
         <form method="POST" action="{% url 'files_batch_action' %}">
             {% csrf_token %}
             <div class="form-inline">
@@ -50,6 +51,7 @@
                             <div class="badge badge-secondary">{{ file.mime_type }}</div>
                         </div>
                         <div class="btn-group" role="group" aria-label="Actions">
+                            <a href="{% url 'copy_file' file.uuid %}" class="btn btn-secondary btn-sm">Copy</a>
                             <a href="{% url 'store_file' file.uuid %}" class="btn btn-secondary btn-sm">Store</a>
                             <a href="{% url 'delete_file' file.uuid %}" class="btn btn-danger btn-sm">Delete</a>
                         </div>

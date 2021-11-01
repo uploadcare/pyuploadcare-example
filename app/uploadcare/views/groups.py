@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.views import View
 from django.views.generic import ListView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
 
@@ -22,8 +23,9 @@ class GroupInfoView(TemplateView):
         return kwargs
 
 
-def group_store(request, group_id):
-    uploadcare = get_uploadcare_client()
-    group = uploadcare.file_group(group_id)
-    group.store()
-    return redirect("group_info", group_id)
+class GroupStoreView(View):
+    def get(self, request, group_id):
+        uploadcare = get_uploadcare_client()
+        group = uploadcare.file_group(group_id)
+        group.store()
+        return redirect("group_info", group_id)
