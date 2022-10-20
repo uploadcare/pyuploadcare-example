@@ -3,10 +3,11 @@ version: "3.7"
 services:
 
   uploadcare:
+    env_file:
+      - secret.env
     build:
       context: "."
       dockerfile: Dockerfile
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
       - ./app:/app
     ports:
