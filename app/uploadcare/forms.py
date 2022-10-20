@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from pyuploadcare.api.metadata import META_KEY_MAX_LEN, META_VALUE_MAX_LEN, key_matcher
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.dj.forms import FileGroupField, ImageField
 from pyuploadcare.transformations.document import DocumentFormat
@@ -17,6 +18,11 @@ class FileUploadForm(forms.Form):
         cleaned_data = super().clean()
         if not (cleaned_data.get("file") or cleaned_data.get("url")):
             raise ValidationError("file or url required")
+
+
+class FileMetadataKeyValueForm(forms.Form):
+    meta_key = forms.RegexField(max_length=META_KEY_MAX_LEN, regex=key_matcher)
+    meta_value = forms.CharField(max_length=META_VALUE_MAX_LEN)
 
 
 class WebhookForm(forms.Form):
