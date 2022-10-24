@@ -21,5 +21,9 @@
     {% include 'files/_video_info.html' %}
   {% endif %}
 
+  {% if file.info.appdata %}
+    {% include 'files/_common_appdata.html' %}
+  {% endif %}
+
   <a class="btn btn-danger" href="{% url 'delete_file' file.uuid %}">Delete file</a>
 {% endblock %}

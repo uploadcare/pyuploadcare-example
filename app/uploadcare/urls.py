@@ -15,6 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
+from uploadcare.views.addons import (
+    AddonExecutionAWSRecognitionRequestView,
+    AddonExecutionClamAVRequestView,
+    AddonExecutionRemoveBGRequestView,
+    AddonExecutionStatusAndResultsView,
+)
 from uploadcare.views.conversions import (
     DocumentConversionJobStatusView,
     DocumentConversionRequestView,
@@ -84,6 +90,27 @@ urlpatterns = [
         "conversions/document/<str:token>/",
         DocumentConversionJobStatusView.as_view(),
         name="document_conversion_status",
+    ),
+
+    path(
+        "addons/aws_recognition/execute/",
+        AddonExecutionAWSRecognitionRequestView.as_view(),
+        name="addon_aws_recognition_request",
+    ),
+    path(
+        "addons/uc_clamav/execute/",
+        AddonExecutionClamAVRequestView.as_view(),
+        name="addon_uc_clamav_virus_scan",
+    ),
+    path(
+        "addons/remove_bg/execute/",
+        AddonExecutionRemoveBGRequestView.as_view(),
+        name="addon_remove_bg",
+    ),
+    path(
+        "addons/<str:addon_name>/execute/<str:file_id>/status/<str:request_id>/",
+        AddonExecutionStatusAndResultsView.as_view(),
+        name="addon_status",
     ),
     path("posts/", PostListView.as_view(), name="post_list"),
     path("posts/create/", PostCreateView.as_view(), name="post_create"),

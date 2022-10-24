@@ -1,0 +1,63 @@
+<br>
+<h3>Appdata</h3>
+<br>
+<div class="col-8">
+    {% if file.info.appdata %}
+        {% for appdata_key, appdata_value in file.info.appdata.items %}
+            {% if appdata_value %}
+                <h5>Appdata for "{{ appdata_key }}"</h5>
+                <div class="table-responsive" style="margin-left: 25px">
+                    <table class="table table-condensed table-bordered table-hover mt-2">
+                        <tbody>
+                                <tr>
+                                    <th>Application version</th>
+                                    <td>{{ appdata_value.version }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Created at</th>
+                                    <td>{{ appdata_value.datetime_created }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Updated at</th>
+                                    <td>{{ appdata_value.datetime_updated }}</td>
+                                </tr>
+
+                                {% if appdata_key == "remove_bg" %}
+                                    <tr>
+                                        <th style="color: darkred; text-indent: 2em">
+                                            <i>Specific Data for background removing</i>
+                                        </th>
+                                        <td></td>
+                                    </tr>
+                                    {%  include "files/appdata_details/_remove_bg_data.html" %}
+                                {% endif %}
+
+                                {% if appdata_key == "uc_clamav_virus_scan" %}
+                                    <tr>
+                                        <th style="color: darkred; text-indent: 2em">
+                                            <i>Specific Data for virus scan with ClamAV</i>
+                                        </th>
+                                        <td></td>
+                                    </tr>
+                                    {%  include "files/appdata_details/_clamav_scan_data.html" %}
+                                {% endif %}
+
+                                {% if appdata_key == "aws_rekognition_detect_labels" %}
+                                    <tr>
+                                        <th style="color: darkred; text-indent: 2em">
+                                            <i>Specific Data for result of labelling via AWS recognition</i>
+                                        </th>
+                                        <td></td>
+                                    </tr>
+                                    {%  include "files/appdata_details/_aws_recogntion.html" %}
+                                {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div>There is no appdata yet</div>>
+    {% endif %}
+</div>
