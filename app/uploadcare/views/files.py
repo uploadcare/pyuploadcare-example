@@ -37,7 +37,7 @@ class FileInfoView(TemplateView):
         try:
             kwargs["file"] = uploadcare.file(file_id)
         except UploadcareException as err:
-            messages.error(self.request, f"Unable to get file: {err}")
+            messages.error(self.request, f"Unable to get file `{file_id}`: {err}")
 
         return kwargs
 
