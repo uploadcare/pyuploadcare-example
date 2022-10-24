@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Setup {{ addon_url_label }} {% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" action="{% url addon_url_name %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.target|as_crispy_field }}
+                </div>
+
+                {% if is_clamav_virus_scan %}
+                    {% include 'addons/addons_params/clamav_virus_scan.html' %}
+                {% endif %}
+
+                {% if is_remove_bg %}
+                    {% include 'addons/addons_params/remove_bg.html' %}
+                {% endif %}
+
+                <button class="btn btn-primary" type="submit">Execute</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
