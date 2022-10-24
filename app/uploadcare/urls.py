@@ -36,7 +36,7 @@ from uploadcare.views.files import (
     FileStoreView,
     FileUploadView,
 )
-from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView
+from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView, GroupDeleteView
 from uploadcare.views.posts import (
     PostCreateView,
     PostDeleteView,
@@ -66,6 +66,7 @@ urlpatterns = [
     path("groups/", GroupListView.as_view(), name="group_list"),
     path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
     path("groups/<str:group_id>/store/", GroupStoreView.as_view(), name="group_store"),
+    path("groups/<str:group_id>/delete/", GroupDeleteView.as_view(), name="group_delete"),
     path("webhooks/", WebhookListView.as_view(), name="webhook_list"),
     path("webhooks/create/", WebhookCreateView.as_view(), name="webhook_create"),
     path("webhooks/<int:webhook_id>/", WebhookInfoView.as_view(), name="webhook_info"),
