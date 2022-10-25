@@ -1,0 +1,12 @@
+
+<tr>
+    <th>File is infected</th>
+    <td>{{ appdata_value.data.infected }}</td>
+</tr>
+
+{% if appdata_value.data.infected %}
+    <tr>
+        <th>File infected with</th>
+        <td>{{ appdata_value.data.infected_with }}</td>
+    </tr>
+{% endif %}

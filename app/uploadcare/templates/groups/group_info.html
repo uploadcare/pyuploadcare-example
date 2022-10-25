@@ -45,4 +45,6 @@
         {% endif %}
     {% endfor %}
 
+    <a href="{% url 'group_delete' group.id %}" class="btn btn-danger btn-sm">Delete</a>
+
 {% endblock %}
