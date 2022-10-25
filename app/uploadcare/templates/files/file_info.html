@@ -25,5 +25,7 @@
     {% include 'files/_common_appdata.html' %}
   {% endif %}
 
+  {% include 'files/_metadata_info.html' %}
+
   <a class="btn btn-danger" href="{% url 'delete_file' file.uuid %}">Delete file</a>
 {% endblock %}

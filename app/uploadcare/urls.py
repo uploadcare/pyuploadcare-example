@@ -37,6 +37,8 @@ from uploadcare.views.files import (
     FileUploadView,
 )
 from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView, GroupDeleteView
+from uploadcare.views.metadata import FileMetadataKeyDeleteView, FileMetadataKeyUpdateView
+
 from uploadcare.views.posts import (
     PostCreateView,
     PostDeleteView,
@@ -63,6 +65,21 @@ urlpatterns = [
     path("files/<str:file_id>/store/", FileStoreView.as_view(), name="store_file"),
     path("files/<str:file_id>/delete/", FileDeleteView.as_view(), name="delete_file"),
     path("files/<str:file_id>/copy/", FileCopyView.as_view(), name="copy_file"),
+    path(
+        "files/<str:file_id>/metadata/<str:md_key>/delete/",
+        FileMetadataKeyDeleteView.as_view(),
+        name="file_metadata_key_delete",
+    ),
+    path(
+        "files/<str:file_id>/metadata/<str:md_key>/update/",
+        FileMetadataKeyUpdateView.as_view(),
+        name="file_metadata_key_update",
+    ),
+    path(
+        "files/<str:file_id>/metadata/create/",
+        FileMetadataKeyUpdateView.as_view(),
+        name="file_metadata_key_create",
+    ),
     path("groups/", GroupListView.as_view(), name="group_list"),
     path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
     path("groups/<str:group_id>/store/", GroupStoreView.as_view(), name="group_store"),
