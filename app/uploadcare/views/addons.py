@@ -144,6 +144,8 @@ class AddonExecutionStatusAndResultsView(TemplateView):
         if is_done:
             try:
                 file = uploadcare.file(src_file_id)
+                file.update_info(with_appdata=True)
+
                 logger.warning(file.info["appdata"])
 
                 kwargs["file"] = file
