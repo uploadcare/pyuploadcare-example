@@ -36,9 +36,8 @@ from uploadcare.views.files import (
     FileStoreView,
     FileUploadView,
 )
-from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView, GroupDeleteView
+from uploadcare.views.groups import GroupDeleteView, GroupInfoView, GroupListView, GroupStoreView
 from uploadcare.views.metadata import FileMetadataKeyDeleteView, FileMetadataKeyUpdateView
-
 from uploadcare.views.posts import (
     PostCreateView,
     PostDeleteView,
@@ -109,7 +108,6 @@ urlpatterns = [
         DocumentConversionJobStatusView.as_view(),
         name="document_conversion_status",
     ),
-
     path(
         "addons/aws_recognition/execute/",
         AddonExecutionAWSRecognitionRequestView.as_view(),

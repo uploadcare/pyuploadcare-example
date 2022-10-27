@@ -3,14 +3,18 @@ from logging import getLogger
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView
-from pyuploadcare.api.addon_entities import AddonLabels
-from pyuploadcare.api.addon_entities import AddonRemoveBGExecutionParams
+from django.views.generic import FormView, TemplateView
+from pyuploadcare.api.addon_entities import AddonLabels, AddonRemoveBGExecutionParams
 from pyuploadcare.api.responses import AddonStatus
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.exceptions import UploadcareException
 
-from uploadcare.forms import AddonAWSRecognitionRequestForm, AddonClamAVScanRequestForm, AddonRemoveBGRequestForm
+from uploadcare.forms import (
+    AddonAWSRecognitionRequestForm,
+    AddonClamAVScanRequestForm,
+    AddonRemoveBGRequestForm,
+)
+
 
 logger = getLogger()
 
@@ -55,8 +59,7 @@ class AddonExecutionBaseRequestView(FormView):
             response = uploadcare.addons_api.execute(target_uuid, self.addon_name)
         except UploadcareException as err:
             messages.error(
-                self.request,
-                f"Unable to execute {self.addon_name} for file `{target_uuid}`: {err}"
+                self.request, f"Unable to execute {self.addon_name} for file `{target_uuid}`: {err}"
             )
             return redirect(self.addon_url_name)
 
@@ -68,7 +71,7 @@ class AddonExecutionAWSRecognitionRequestView(AddonExecutionBaseRequestView):
     form_class = AddonAWSRecognitionRequestForm
     addon_name = AddonLabels.AWS_LABEL_RECOGNITION
     addon_url_label = "aws_recognition"
-    addon_url_name = 'addon_aws_recognition_request'
+    addon_url_name = "addon_aws_recognition_request"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -80,7 +83,7 @@ class AddonExecutionClamAVRequestView(AddonExecutionBaseRequestView):
     form_class = AddonClamAVScanRequestForm
     addon_name = AddonLabels.CLAM_AV
     addon_url_label = "uc_clamav"
-    addon_url_name = 'addon_uc_clamav_virus_scan'
+    addon_url_name = "addon_uc_clamav_virus_scan"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -97,7 +100,7 @@ class AddonExecutionRemoveBGRequestView(AddonExecutionBaseRequestView):
     form_class = AddonRemoveBGRequestForm
     addon_name = AddonLabels.REMOVE_BG
     addon_url_label = "remove_bg"
-    addon_url_name = 'addon_remove_bg'
+    addon_url_name = "addon_remove_bg"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -114,14 +117,17 @@ class AddonExecutionRemoveBGRequestView(AddonExecutionBaseRequestView):
 class AddonExecutionStatusAndResultsView(TemplateView):
     template_name = "addons/addons_execution_result_base.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):  # noqa: max-complexity: 7
         addon_name = self.kwargs["addon_name"]
         src_file_id = self.kwargs["file_id"]
         addon = addon_url_enum_mapping.get(addon_name)
         kwargs["addon_urls"] = []
 
         if not addon:
-            messages.error(self.request, f"Unable to find addon with name `{addon_name}`, use one of {addon_url_names}")
+            messages.error(
+                self.request,
+                f"Unable to find addon with name `{addon_name}`, use one of {addon_url_names}",
+            )
             kwargs["execution_result"] = {}
             kwargs["addon_urls"] = addon_url_names
             return kwargs

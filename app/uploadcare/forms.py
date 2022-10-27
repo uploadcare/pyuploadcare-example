@@ -117,9 +117,15 @@ class AddonRemoveBGRequestForm(AddonBaseRequestForm):
     crop_margin = forms.RegexField(required=False, regex=r"^(?:0|[0-9]+px|[0-9]+%)$")
     scale = forms.CharField(required=False)
     add_shadow = forms.BooleanField(required=False)
-    type_level = forms.ChoiceField(required=False, choices=[(i, i) for i in ["none", "1", "2", "latest"]])
-    type = forms.ChoiceField(required=False, choices=[(i, i) for i in ["auto", "person", "product", "car"]])
+    type_level = forms.ChoiceField(
+        required=False, choices=[(i, i) for i in ["none", "1", "2", "latest"]]
+    )
+    type = forms.ChoiceField(
+        required=False, choices=[(i, i) for i in ["auto", "person", "product", "car"]]
+    )
     semitransparency = forms.BooleanField(required=False)
     channels = forms.ChoiceField(required=False, choices=[(i, i) for i in ["rgba", "alpha"]])
-    roi = forms.RegexField(required=False, regex=r"^(?:(?:(?:\d+px ){3}\d+px)|(?:(?:\d+% ){3}\d+%))$")
+    roi = forms.RegexField(
+        required=False, regex=r"^(?:(?:(?:\d+px ){3}\d+px)|(?:(?:\d+% ){3}\d+%))$"
+    )
     position = forms.RegexField(required=False, regex=r"^(?:origin|center|\d+%|\d+% \d+%)$")
