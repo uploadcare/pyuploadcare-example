@@ -1,4 +1,5 @@
 <h4>Image info</h4>
+{% load image_info_filters %}
 
 <div class="row">
     <div class="col-4">
@@ -14,30 +15,30 @@
                 <tbody>
                         <tr>
                             <th>Color Mode</th>
-                            <td>{{ file.info.image_info.color_mode }}</td>
+                            <td>{{ file.info.content_info.image.color_mode }}</td>
                         </tr>
                         <tr>
                             <th>Orientation</th>
-                            <td>{{ file.info.image_info.orientation }}</td>
+                            <td>{{ file.info.content_info.image.orientation|orientation_as_string }}</td>
                         </tr>
                         <tr>
                             <th>Format</th>
-                            <td>{{ file.info.image_info.format }}</td>
+                            <td>{{ file.info.content_info.image.format }}</td>
                         </tr>
                         <tr>
                             <th>Is image a sequence</th>
-                            <td>{{ file.info.image_info.sequence|yesno }}</td>
+                            <td>{{ file.info.content_info.image.sequence|yesno }}</td>
                         </tr>
                         <tr>
                             <th>Dimensions</th>
-                            <td>{{ file.info.image_info.width }}×{{ file.info.image_info.height }}</td>
+                            <td>{{ file.info.content_info.image.width }}×{{ file.info.content_info.image.height }}</td>
                         </tr>
                         <tr>
                             <th>Geo location</th>
                             <td>
-                                {% if file.info.image_info.geo_location %}
-                                    {{ file.info.image_info.geo_location.latitude }},
-                                    {{ file.info.image_info.geo_location.longitude }}
+                                {% if file.info.content_info.image.geo_location %}
+                                    {{ file.info.content_info.image.geo_location.latitude }},
+                                    {{ file.info.content_info.image.geo_location.longitude }}
                                 {% else %}
                                     No data
                                 {% endif %}
@@ -46,8 +47,8 @@
                         <tr>
                             <th>DPI</th>
                             <td>
-                                {% if file.info.image_info.dpi %}
-                                    {{ file.info.image_info.dpi.0 }}×{{ file.info.image_info.dpi.1 }}
+                                {% if file.info.content_info.image.dpi %}
+                                    {{ file.info.content_info.image.dpi.0 }}×{{ file.info.content_info.image.dpi.1 }}
                                 {% else %}
                                     No data
                                 {% endif %}
