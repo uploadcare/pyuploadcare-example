@@ -31,7 +31,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <input class="mr-2" type="checkbox" value="{{ file.uuid }}"
                                name="files">
-                        {% if file.info.image_info %}
+                        {% if file.info.is_image %}
                             <a href="{{ file.cdn_url }}" target="_blank" class="img-thumbnail mr-2">
                                 <div
                                         style="width: 150px; height: 150px; background-image: url('https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/160x160/'); background-position: 50% 50%; background-size: cover"></div>

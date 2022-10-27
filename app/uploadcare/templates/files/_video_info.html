@@ -4,47 +4,61 @@
         <tbody>
             <tr>
                 <th>Duration</th>
-                <td>{{ file.info.video_info.duration }}</td>
+                <td>{{ file.info.content_info.video.duration }}</td>
             </tr>
             <tr>
                 <th>Format</th>
-                <td>{{ file.info.video_info.format }}</td>
+                <td>{{ file.info.content_info.video.format }}</td>
             </tr>
             <tr>
                 <th>Bitrate</th>
-                <td>{{ file.info.video_info.bitrate }}</td>
+                <td>{{ file.info.content_info.video.bitrate }}</td>
             </tr>
-            <tr>
-                <th>Dimensions</th>
-                <td>{{ file.info.video_info.video.width }}×{{ file.info.video_info.video.height }}</td>
-            </tr>
-            <tr>
-                <th>Frame rate</th>
-                <td>{{ file.info.video_info.video.framerate }}</td>
-            </tr>
-            <tr>
-                <th>Codec</th>
-                <td>{{ file.info.video_info.video.codec }}</td>
-            </tr>
-            <tr>
-                <th colspan="2">Audio</th>
-            </tr>
-            <tr>
-                <th>Bitrate</th>
-                <td>{{ file.info.video_info.audio.bitrate }}</td>
-            </tr>
-            <tr>
-                <th>Codec</th>
-                <td>{{ file.info.video_info.audio.codec }}</td>
-            </tr>
-            <tr>
-                <th>Sample Rate</th>
-                <td>{{ file.info.video_info.audio.sampleRate }}</td>
-            </tr>
-            <tr>
-                <th>Channels</th>
-                <td>{{ file.info.video_info.audio.channels }}</td>
-            </tr>
+
+            {% for video_stream in file.info.content_info.video.video %}
+                <tr>
+                    <th colspan="2" style="color: blue; text-indent: 1em">Video stream #{{ forloop.counter0 }}</th>
+                </tr>
+                <tr>
+                    <th>Dimensions</th>
+                    <td>{{ video_stream.width }}×{{ video_stream.height }}</td>
+                </tr>
+                <tr>
+                    <th>Frame rate</th>
+                    <td>{{ video_stream.frame_rate }}</td>
+                </tr>
+                <tr>
+                    <th>Bitrate</th>
+                    <td>{{ video_stream.bitrate }}</td>
+                </tr>
+                <tr>
+                    <th>Codec</th>
+                    <td>{{ video_stream.video.codec }}</td>
+                </tr>
+
+            {% endfor %}
+
+            {% for audio_stream in file.info.content_info.video.audio %}
+                <tr>
+                    <th colspan="2" style="color: darkorange; text-indent: 1em">Audio stream #{{ forloop.counter0 }}</th>
+                </tr>
+                <tr>
+                    <th>Bitrate</th>
+                    <td>{{ audio_stream.bitrate }}</td>
+                </tr>
+                <tr>
+                    <th>Codec</th>
+                    <td>{{ audio_stream.codec }}</td>
+                </tr>
+                <tr>
+                    <th>Sample Rate</th>
+                    <td>{{ audio_stream.sample_rate }}</td>
+                </tr>
+                <tr>
+                    <th>Channels</th>
+                    <td>{{ audio_stream.channels }}</td>
+                </tr>
+            {%  endfor %}
         </tbody>
     </table>
 </div>
