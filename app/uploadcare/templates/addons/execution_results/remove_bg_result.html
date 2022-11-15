@@ -1,0 +1,13 @@
+<div class="table-responsive" style="margin-left: 25px">
+    <table class="table table-condensed table-bordered table-hover mt-2">
+        <tbody>
+            <tr style="margin-left: 10px">
+                <th>Resulted file</th>
+                <td>
+                    <a href="{% url 'file_info' execution_result.result.file_id %}" class="btn btn-secondary btn-sm">
+                        Jump to info for file {{ execution_result.result.file_id }}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -11,3 +11,4 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry config virtualenvs.create false || true && poetry install
 
 EXPOSE 8000
+ENTRYPOINT /app/start.sh

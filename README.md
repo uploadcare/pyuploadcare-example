@@ -33,16 +33,21 @@ $ docker-compose build
 
 This command will build an image for the application.
 
+Also you need to prepare `secret.env` file with your public and secret keys
+as environmental variables for docker container to use
+
+```shell
+# 1. Copy example into your local `secret.env`
+cp secret.env.example secret.env
+
+# 2. Fill the values with your favourite editor
+```
+
 When the image is ready — up the containers with the following command.
+Migrations are applied on each container startup (look at `./app/start.sh`).
 
 ```console
 $ docker-compose up -d
-```
-
-Then, apply migrations:
-
-```console
-$ docker-compose run --rm uploadcare ./manage.py migrate
 ```
 
 Now, the application must be available in your web-browser, on `http://localhost:8000`

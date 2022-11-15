@@ -20,7 +20,11 @@
                     <div class="text-place flex-grow-1 text-truncate">
                         <a href="{% url 'group_info' group.id %}">{{ group.id }}</a>
                     </div>
-                    <div class="badge badge-secondary">{{ group.info.files_count }} files</div>
+                    <div class="badge badge-secondary" style="margin-right: 20px">{{ group.info.files_count }} files</div>
+
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a href="{% url 'group_delete' group.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>

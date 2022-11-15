@@ -5,6 +5,10 @@
 {% url 'webhook_list' as webhook_list %}
 {% url 'video_conversion_request' as video_conversion_request %}
 {% url 'document_conversion_request' as document_conversion_request %}
+{% url 'addon_aws_recognition_request' as addon_aws_recognition_request %}
+{% url 'addon_uc_clamav_virus_scan' as addon_uc_clamav_virus_scan %}
+{% url 'addon_remove_bg' as addon_remove_bg %}
+
 {% url 'post_list' as post_list %}
 
 <ul class="nav nav-pills flex-column">
@@ -27,6 +31,17 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {% if request.path == document_conversion_request %} active {% endif %}" href="{{ document_conversion_request }}">Convert document</a>
+    </li>
+    <li class="dropdown-divider"></li>
+
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == addon_aws_recognition_request %} active {% endif %}" href="{{ addon_aws_recognition_request }}">Execute AWS Labels Recognition</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == addon_uc_clamav_virus_scan %} active {% endif %}" href="{{ addon_uc_clamav_virus_scan }}">Execute ClamAV virus scan</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == addon_remove_bg %} active {% endif %}" href="{{ addon_remove_bg }}">Execute Remove BG</a>
     </li>
     <li class="dropdown-divider"></li>
 
