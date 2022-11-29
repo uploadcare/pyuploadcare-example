@@ -13,13 +13,15 @@
     {% include 'files/_common_info.html' %}
   </div>
 
-  {% if file.info.image_info %}
+  {% if file.info.content_info.image %}
     {% include 'files/_image_info.html' %}
   {% endif %}
 
-  {% if file.info.video_info %}
+  {% if file.info.content_info.video %}
     {% include 'files/_video_info.html' %}
   {% endif %}
+
+  {% include 'files/_metadata_info.html' %}
 
   <a class="btn btn-danger" href="{% url 'delete_file' file.uuid %}">Delete file</a>
 {% endblock %}
