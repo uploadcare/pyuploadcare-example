@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import FormView, ListView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
-from pyuploadcare.exceptions import UploadcareException
+from pyuploadcare.exceptions import UploadcareException, WebhookIsNotUnique
 
 from uploadcare.forms import WebhookForm
 
@@ -65,6 +65,10 @@ class WebhookCreateView(FormView):
             webhook = uploadcare.create_webhook(
                 target_url=target_url, is_active=is_active, **kwargs
             )
+        except WebhookIsNotUnique:
+            messages.error(self.request, "Unable to create webhook: webhook is not unique")
+            return redirect("webhook_list")
+
         except UploadcareException as err:
             messages.error(self.request, f"Unable to create webhook: {err}")
             return redirect("webhook_list")
