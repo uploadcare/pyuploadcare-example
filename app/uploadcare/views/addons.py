@@ -1,16 +1,22 @@
 from logging import getLogger
+from typing import Any, Optional, Tuple
 
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView
-from pyuploadcare.api.addon_entities import AddonLabels
-from pyuploadcare.api.addon_entities import AddonRemoveBGExecutionParams
+from django.views.generic import FormView, TemplateView
+from pyuploadcare import File
+from pyuploadcare.api.addon_entities import AddonLabels, AddonRemoveBGExecutionParams
 from pyuploadcare.api.responses import AddonStatus
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.exceptions import UploadcareException
 
-from uploadcare.forms import AddonAWSRecognitionRequestForm, AddonClamAVScanRequestForm, AddonRemoveBGRequestForm
+from uploadcare.forms import (
+    AddonAWSRecognitionRequestForm,
+    AddonClamAVScanRequestForm,
+    AddonRemoveBGRequestForm,
+)
+
 
 logger = getLogger()
 
@@ -55,8 +61,7 @@ class AddonExecutionBaseRequestView(FormView):
             response = uploadcare.addons_api.execute(target_uuid, self.addon_name)
         except UploadcareException as err:
             messages.error(
-                self.request,
-                f"Unable to execute {self.addon_name} for file `{target_uuid}`: {err}"
+                self.request, f"Unable to execute {self.addon_name} for file `{target_uuid}`: {err}"
             )
             return redirect(self.addon_url_name)
 
@@ -68,7 +73,7 @@ class AddonExecutionAWSRecognitionRequestView(AddonExecutionBaseRequestView):
     form_class = AddonAWSRecognitionRequestForm
     addon_name = AddonLabels.AWS_LABEL_RECOGNITION
     addon_url_label = "aws_recognition"
-    addon_url_name = 'addon_aws_recognition_request'
+    addon_url_name = "addon_aws_recognition_request"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -80,7 +85,7 @@ class AddonExecutionClamAVRequestView(AddonExecutionBaseRequestView):
     form_class = AddonClamAVScanRequestForm
     addon_name = AddonLabels.CLAM_AV
     addon_url_label = "uc_clamav"
-    addon_url_name = 'addon_uc_clamav_virus_scan'
+    addon_url_name = "addon_uc_clamav_virus_scan"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -97,7 +102,7 @@ class AddonExecutionRemoveBGRequestView(AddonExecutionBaseRequestView):
     form_class = AddonRemoveBGRequestForm
     addon_name = AddonLabels.REMOVE_BG
     addon_url_label = "remove_bg"
-    addon_url_name = 'addon_remove_bg'
+    addon_url_name = "addon_remove_bg"
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -114,6 +119,38 @@ class AddonExecutionRemoveBGRequestView(AddonExecutionBaseRequestView):
 class AddonExecutionStatusAndResultsView(TemplateView):
     template_name = "addons/addons_execution_result_base.html"
 
+    def _addon_not_found(self, addon_name: str, kwargs: dict):
+        messages.error(
+            self.request,
+            f"Unable to find addon with name `{addon_name}`, use one of {addon_url_names}",
+        )
+        kwargs["execution_result"] = {}
+        kwargs["addon_urls"] = addon_url_names
+        return kwargs
+
+    def _get_addon_result(self, uploadcare, addon, request_id) -> Tuple[Any, bool]:
+        result, is_done = None, False
+        try:
+            result = uploadcare.addons_api.status(request_id, addon)
+            logger.warning(result)
+            is_done = result.status == AddonStatus.DONE
+        except UploadcareException as err:
+            messages.error(self.request, f"Unable to get addon status: {err}")
+        finally:
+            return result, is_done
+
+    def _get_file_with_updated_info(self, uploadcare, file_id) -> Optional[File]:
+        file = None
+        try:
+            file = uploadcare.file(file_id)
+            file.update_info(include_appdata=True)
+
+            logger.warning(file.info["appdata"])
+        except UploadcareException as err:
+            messages.error(self.request, f"Unable to get file data: {err}")
+        finally:
+            return file
+
     def get_context_data(self, **kwargs):
         addon_name = self.kwargs["addon_name"]
         src_file_id = self.kwargs["file_id"]
@@ -121,35 +158,18 @@ class AddonExecutionStatusAndResultsView(TemplateView):
         kwargs["addon_urls"] = []
 
         if not addon:
-            messages.error(self.request, f"Unable to find addon with name `{addon_name}`, use one of {addon_url_names}")
-            kwargs["execution_result"] = {}
-            kwargs["addon_urls"] = addon_url_names
-            return kwargs
+            return self._addon_not_found(addon_name, kwargs)
 
         request_id = self.kwargs["request_id"]
-        uploadcare = get_uploadcare_client()
-        is_done = False
         kwargs["refresh_link"] = reverse("addon_status", args=[addon_name, src_file_id, request_id])
 
-        try:
-            result = uploadcare.addons_api.status(request_id, addon)
-            logger.warning(result)
-            is_done = result.status == AddonStatus.DONE
+        uploadcare = get_uploadcare_client()
+        result, is_done = self._get_addon_result(uploadcare, addon, request_id)
 
-            kwargs["execution_result"] = result
-            kwargs["is_done"] = is_done
-        except UploadcareException as err:
-            messages.error(self.request, f"Unable to get addon status: {err}")
+        kwargs["execution_result"] = result
+        kwargs["is_done"] = is_done
 
         if is_done:
-            try:
-                file = uploadcare.file(src_file_id)
-                file.update_info(with_appdata=True)
-
-                logger.warning(file.info["appdata"])
-
-                kwargs["file"] = file
-            except UploadcareException as err:
-                messages.error(self.request, f"Unable to get file data: {err}")
+            kwargs["file"] = self._get_file_with_updated_info(uploadcare, src_file_id)
 
         return kwargs

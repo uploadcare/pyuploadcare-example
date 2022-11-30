@@ -36,7 +36,7 @@ class FileInfoView(TemplateView):
 
         try:
             file_resource = uploadcare.file(file_id)
-            file_resource.update_info(with_appdata=True)
+            file_resource.update_info(include_appdata=True)
             kwargs["file"] = file_resource
         except UploadcareException as err:
             messages.error(self.request, f"Unable to get file `{file_id}`: {err}")
