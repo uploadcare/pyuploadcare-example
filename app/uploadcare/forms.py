@@ -12,9 +12,7 @@ from uploadcare.models import Post
 class FileUploadForm(forms.Form):
     file = forms.FileField(required=False)
     url = forms.URLField(required=False)
-    store = forms.ChoiceField(
-        choices=[("auto", "auto"), ("yes", "yes"), ("no", "no")]
-    )
+    store = forms.ChoiceField(choices=[("auto", "auto"), ("yes", "yes"), ("no", "no")])
 
     def clean(self):
         cleaned_data = super().clean()

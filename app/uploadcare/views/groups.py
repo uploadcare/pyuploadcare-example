@@ -1,9 +1,14 @@
+from logging import getLogger
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.exceptions import UploadcareException
+
+
+logger = getLogger(__name__)
 
 
 class GroupListView(ListView):
@@ -23,7 +28,10 @@ class GroupInfoView(TemplateView):
         uploadcare = get_uploadcare_client()
 
         try:
-            kwargs["group"] = uploadcare.file_group(group_id)
+            group = uploadcare.file_group(group_id)
+            group.update_info()
+
+            kwargs["group"] = group
         except UploadcareException as err:
             messages.error(self.request, f"Unable to get group: {err}")
 
