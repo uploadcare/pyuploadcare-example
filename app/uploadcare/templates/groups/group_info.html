@@ -14,6 +14,7 @@
             {% if group.info.datetime_stored %}
                 {{ group.info.datetime_stored | date }}
             {% else %}
+                 - - -
                 <a class="btn btn-sm btn-secondary" href="{% url 'group_store' group.id %}">Store</a>
             {% endif %}
         </li>
@@ -44,5 +45,7 @@
             </li>
         {% endif %}
     {% endfor %}
+
+    <a href="{% url 'group_delete' group.id %}" class="btn btn-danger btn-sm">Delete</a>
 
 {% endblock %}
