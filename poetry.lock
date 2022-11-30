@@ -336,7 +336,7 @@ django = ["Django (>=1.11)"]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
 reference = "feature/new-v4-base"
-resolved_reference = "be6874d858d325f4a9038bd6da43c08395b14ca9"
+resolved_reference = "5be3df31a6fe5898200f2d6bb91fad27716e9ab8"
 
 [[package]]
 name = "rfc3986"
