@@ -12,12 +12,20 @@ from uploadcare.models import Post
 class FileUploadForm(forms.Form):
     file = forms.FileField(required=False)
     url = forms.URLField(required=False)
-    store = forms.BooleanField(required=False)
+    store = forms.ChoiceField(
+        choices=[("auto", "auto"), ("yes", "yes"), ("no", "no")]
+    )
 
     def clean(self):
         cleaned_data = super().clean()
+
         if not (cleaned_data.get("file") or cleaned_data.get("url")):
             raise ValidationError("file or url required")
+
+        converted_store = {"yes": True, "no": False, "auto": None}.get(cleaned_data["store"])
+        cleaned_data["store"] = converted_store
+
+        return cleaned_data
 
 
 class FileMetadataKeyValueForm(forms.Form):
