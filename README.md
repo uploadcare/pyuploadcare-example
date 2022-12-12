@@ -182,22 +182,23 @@ Conversion result page also includes information about how conversion is going.
 
 ### Addons
 
-One can execute operations that wrapped as addons.
+Use can execute operations that wrapped as addons.
 There are three implemented addons:
 - background removing 
 - virus scanning
 - labels recognition
+
 For additional information proceed to [Uploadcare REST API Add-ons](https://uploadcare.com/api-refs/rest-api/v0.7.0/#tag/Add-Ons).
 
 
 #### Labels recognition via AWS
 
-One only needs to choose a file to proceed
+You only need to choose a file to start a recognition
 
 ![Setup recogntion](./img/setup_addon_aws_recognition.png)
 
 After all corresponding part of file's `adddata` is rendered 
-and one can get into full file information if needed
+and you can get into full file information if needed
 
 ![Recogntion results](./img/addon_aws_execution_result.png)
 
@@ -219,13 +220,13 @@ Background removing has a bunch of options to select.
 
 ![Setup background](./img/setup_addon_remove_bg.png)
 
-Usually it takes time to remove the background especially for large images, so one can see `IN_PROGRESS` status page with refresh button
+Usually it takes time to remove the background especially for large images,
+so you may see `IN_PROGRESS` status page with refresh button
 
 ![Recogntion results](./img/addon_remove_bg_in_progress.png)
 
-
-New image with removed backgorund is put into new file, 
-so the result page has both links to original file and created one
+Image with removed background will be put into new file, 
+so the result page has both links to the original file and created one
 
 ![Background results](./img/addon_remove_bg_result_done.png)
 
