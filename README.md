@@ -1,7 +1,7 @@
 # Pyuploadcare Example app
 
 This example project demonstrates the pyuploadcare capabilities.
-The project is based on Python 3.9 and Django 3.2.8.
+The project is based on Python 3.8 and Django 3.2.8.
 
 * [Installation](#installation)
   * [Using docker](#using-docker)
@@ -64,7 +64,7 @@ Make sure Python and Poetry are installed on your system. Fire command prompt an
 
 ```console
 $ python -V
-Python 3.9.6
+Python 3.8.9
 $ poetry --version
 Poetry version 1.1.9
 ```
@@ -118,9 +118,10 @@ The page shows all the files you have on Uploadcare servers. Each file has actio
 
 ![Files index](./img/files_list.png)
 
-To go to the `show` page, simply click on a filename:
+To go to the `show` page, simply click on a filename.
+There are blocks with readonly `appdata` and editable `metadata`:
 
-![Show file page](./img/file_info.png)
+![Show file page](./img/file_info_with_metadata.png)
 
 The `index` page also supports batch operations pages — batch store, batch delete, create file group from selected files.
 Just select multiple files and apply batch action.
@@ -132,6 +133,7 @@ Just select multiple files and apply batch action.
 File Groups section provides user interface to manage file groups on Uploadcare.
 
 The `index` page shows a minimal info about each group including ID and files count.
+There is also a button for deleting the `group`
 
 ![Index groups](./img/groups_list.png)
 
@@ -176,6 +178,57 @@ Video conversion works the same way but the form has some additional parameters 
 Conversion result page also includes information about how conversion is going.
 
 ![Convert video result](./img/video_conversion_status.png)
+
+
+### Addons
+
+One can execute operations that wrapped as addons.
+There are three implemented addons:
+- background removing 
+- virus scanning
+- labels recognition
+For additional information proceed to [Uploadcare REST API Add-ons](https://uploadcare.com/api-refs/rest-api/v0.7.0/#tag/Add-Ons).
+
+
+#### Labels recognition via AWS
+
+One only needs to choose a file to proceed
+
+![Setup recogntion](./img/setup_addon_aws_recognition.png)
+
+After all corresponding part of file's `adddata` is rendered 
+and one can get into full file information if needed
+
+![Recogntion results](./img/addon_aws_execution_result.png)
+
+
+#### ClamAV Antivirus scan
+
+Choose a file to scan and additional action for revealed infected file
+
+![avscan recogntion](./img/setup_addon_av_clamav.png)
+
+Application renders corresponding part of file's `adddata` and the link to full file info page
+
+![avscan results](./img/addon_clamav_execution_result.png)
+
+
+#### Background removing
+
+Background removing has a bunch of options to select.
+
+![Setup background](./img/setup_addon_remove_bg.png)
+
+Usually it takes time to remove the background especially for large images, so one can see `IN_PROGRESS` status page with refresh button
+
+![Recogntion results](./img/addon_remove_bg_in_progress.png)
+
+
+New image with removed backgorund is put into new file, 
+so the result page has both links to original file and created one
+
+![Background results](./img/addon_remove_bg_result_done.png)
+
 
 
 ### Webhooks
