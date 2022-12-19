@@ -182,16 +182,16 @@ Conversion result page also includes information about how conversion is going.
 
 ### Addons
 
-Use can execute operations that wrapped as addons.
+User can execute operations that wrapped as addons.
 There are three implemented addons:
 - background removing 
 - virus scanning
-- labels recognition
+- object recognition
 
 For additional information proceed to [Uploadcare REST API Add-ons](https://uploadcare.com/api-refs/rest-api/v0.7.0/#tag/Add-Ons).
 
 
-#### Labels recognition via AWS
+#### Object recognition via AWS
 
 You only need to choose a file to start a recognition
 
