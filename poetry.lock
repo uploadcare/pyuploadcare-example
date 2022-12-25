@@ -335,8 +335,8 @@ django = ["Django (>=1.11)"]
 [package.source]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
-reference = "feature/new-v4-base"
-resolved_reference = "dc97fb093ef180112b1a806d635fa07694c99ad4"
+reference = "main"
+resolved_reference = "02b94a371d9ffd74135901a808af3d7a7953c7da"
 
 [[package]]
 name = "rfc3986"
@@ -403,7 +403,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "647e2c2881bdd3977131807e52d8bf5a515e6d48a0c5d3e4f607ecfc7d0259b2"
+content-hash = "6583114b26bf947503c3134f281bdb55d48dcf0d00c32bbbafe40bfd86d50106"
 
 [metadata.files]
 anyio = [

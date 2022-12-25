@@ -121,10 +121,13 @@ class AddonClamAVScanRequestForm(AddonBaseRequestForm):
 
 
 class AddonRemoveBGRequestForm(AddonBaseRequestForm):
-    crop = forms.BooleanField(required=False)
-    crop_margin = forms.RegexField(required=False, regex=r"^(?:0|[0-9]+px|[0-9]+%)$")
-    scale = forms.CharField(required=False)
-    add_shadow = forms.BooleanField(required=False)
+    crop = forms.BooleanField(required=False, initial=False)
+    crop_margin = forms.RegexField(
+        required=False, regex=r"^(?:0|[0-9]+px|[0-9]+%)$", empty_value="0px"
+    )
+    scale = forms.CharField(required=False, empty_value=None)
+    add_shadow = forms.BooleanField(required=False, initial=False)
+
     type_level = forms.ChoiceField(
         required=False, choices=[(i, i) for i in ["none", "1", "2", "latest"]]
     )
@@ -134,6 +137,12 @@ class AddonRemoveBGRequestForm(AddonBaseRequestForm):
     semitransparency = forms.BooleanField(required=False)
     channels = forms.ChoiceField(required=False, choices=[(i, i) for i in ["rgba", "alpha"]])
     roi = forms.RegexField(
-        required=False, regex=r"^(?:(?:(?:\d+px ){3}\d+px)|(?:(?:\d+% ){3}\d+%))$"
+        required=False,
+        regex=r"^(?:(?:(?:\d+px ){3}\d+px)|(?:(?:\d+% ){3}\d+%))$",
+        empty_value=None,
     )
-    position = forms.RegexField(required=False, regex=r"^(?:origin|center|\d+%|\d+% \d+%)$")
+    position = forms.RegexField(
+        required=False,
+        regex=r"^(?:origin|center|\d+%|\d+% \d+%)$",
+        empty_value=None,
+    )

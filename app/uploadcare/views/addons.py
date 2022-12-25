@@ -58,7 +58,7 @@ class AddonExecutionBaseRequestView(FormView):
         target_uuid, params = self._get_target_and_params(form)
         uploadcare = get_uploadcare_client()
         try:
-            response = uploadcare.addons_api.execute(target_uuid, self.addon_name)
+            response = uploadcare.addons_api.execute(target_uuid, self.addon_name, params=params)
         except UploadcareException as err:
             messages.error(
                 self.request, f"Unable to execute {self.addon_name} for file `{target_uuid}`: {err}"
@@ -111,7 +111,9 @@ class AddonExecutionRemoveBGRequestView(AddonExecutionBaseRequestView):
 
     def _get_target_and_params(self, form):
         target_uuid, params = super()._get_target_and_params(form)
-        params = AddonRemoveBGExecutionParams.parse_obj(form.cleaned_data).dict()
+        params = AddonRemoveBGExecutionParams.parse_obj(form.cleaned_data).dict(
+            exclude_unset=True, exclude_none=True
+        )
         logger.warning(f"use as params for RemoveBG: {params}")
         return target_uuid, params
 
