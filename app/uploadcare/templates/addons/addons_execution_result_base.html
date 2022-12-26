@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+    <div class="table-responsive" style="margin-left: 25px">
+        <table class="table table-condensed table-bordered table-hover mt-2">
+            <tbody>
+                <tr style="margin-left: 10px">
+                    <th>Execution status</th>
+                    <td>{{ execution_result.status.value }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block body %}
+    {% if addon_urls %}
+        <h5>Cannot find results for {{ addon_name }} </h5>>
+        {% for addon_url_name in addon_urls %}
+            <div>
+                <a href="{% url "addon_status" addon_url_name file_id request_id %}">
+                Try link for {{ addon_url_name }}
+                </a>
+                <br>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <a href="{% url 'file_info' file_id %}">You can watch full target file information {{ file_id }} here</a>
+        </div>
+
+        {% if is_done %}
+            {%  if addon_name == 'remove_bg' %}
+                {% include 'addons/execution_results/remove_bg_result.html' %}
+            {% endif %}
+            {% include 'files/_common_appdata.html' %}
+        {% else %}
+            <form method="GET" action="{{ refresh_link }}">
+                <button class="btn btn-primary" type="submit">Refresh</button>
+            </form>
+        {% endif %}
+    {%  endif %}
+{% endblock %}

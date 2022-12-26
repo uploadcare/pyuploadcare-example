@@ -15,6 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
+from uploadcare.views.addons import (
+    AddonExecutionAWSRecognitionRequestView,
+    AddonExecutionClamAVRequestView,
+    AddonExecutionRemoveBGRequestView,
+    AddonExecutionStatusAndResultsView,
+)
 from uploadcare.views.conversions import (
     DocumentConversionJobStatusView,
     DocumentConversionRequestView,
@@ -30,7 +36,8 @@ from uploadcare.views.files import (
     FileStoreView,
     FileUploadView,
 )
-from uploadcare.views.groups import GroupInfoView, GroupListView, GroupStoreView
+from uploadcare.views.groups import GroupDeleteView, GroupInfoView, GroupListView, GroupStoreView
+from uploadcare.views.metadata import FileMetadataKeyDeleteView, FileMetadataKeyUpdateView
 from uploadcare.views.posts import (
     PostCreateView,
     PostDeleteView,
@@ -57,9 +64,25 @@ urlpatterns = [
     path("files/<str:file_id>/store/", FileStoreView.as_view(), name="store_file"),
     path("files/<str:file_id>/delete/", FileDeleteView.as_view(), name="delete_file"),
     path("files/<str:file_id>/copy/", FileCopyView.as_view(), name="copy_file"),
+    path(
+        "files/<str:file_id>/metadata/<str:md_key>/delete/",
+        FileMetadataKeyDeleteView.as_view(),
+        name="file_metadata_key_delete",
+    ),
+    path(
+        "files/<str:file_id>/metadata/<str:md_key>/update/",
+        FileMetadataKeyUpdateView.as_view(),
+        name="file_metadata_key_update",
+    ),
+    path(
+        "files/<str:file_id>/metadata/create/",
+        FileMetadataKeyUpdateView.as_view(),
+        name="file_metadata_key_create",
+    ),
     path("groups/", GroupListView.as_view(), name="group_list"),
     path("groups/<str:group_id>/", GroupInfoView.as_view(), name="group_info"),
     path("groups/<str:group_id>/store/", GroupStoreView.as_view(), name="group_store"),
+    path("groups/<str:group_id>/delete/", GroupDeleteView.as_view(), name="group_delete"),
     path("webhooks/", WebhookListView.as_view(), name="webhook_list"),
     path("webhooks/create/", WebhookCreateView.as_view(), name="webhook_create"),
     path("webhooks/<int:webhook_id>/", WebhookInfoView.as_view(), name="webhook_info"),
@@ -84,6 +107,26 @@ urlpatterns = [
         "conversions/document/<str:token>/",
         DocumentConversionJobStatusView.as_view(),
         name="document_conversion_status",
+    ),
+    path(
+        "addons/aws_recognition/execute/",
+        AddonExecutionAWSRecognitionRequestView.as_view(),
+        name="addon_aws_recognition_request",
+    ),
+    path(
+        "addons/uc_clamav/execute/",
+        AddonExecutionClamAVRequestView.as_view(),
+        name="addon_uc_clamav_virus_scan",
+    ),
+    path(
+        "addons/remove_bg/execute/",
+        AddonExecutionRemoveBGRequestView.as_view(),
+        name="addon_remove_bg",
+    ),
+    path(
+        "addons/<str:addon_name>/execute/<str:file_id>/status/<str:request_id>/",
+        AddonExecutionStatusAndResultsView.as_view(),
+        name="addon_status",
     ),
     path("posts/", PostListView.as_view(), name="post_list"),
     path("posts/create/", PostCreateView.as_view(), name="post_create"),

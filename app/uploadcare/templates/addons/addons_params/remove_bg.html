@@ -1,0 +1,52 @@
+{% load crispy_forms_tags %}
+
+<div class="mb-3">
+    {{ form.crop|as_crispy_field }}
+</div>
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col-4">
+            {{ form.crop_margin|as_crispy_field }}
+        </div>
+        <div class="col-4">
+            {{ form.scale|as_crispy_field }}
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col-4">
+            {{ form.type_level|as_crispy_field }}
+        </div>
+        <div class="col-4">
+            {{ form.type|as_crispy_field }}
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col-4">
+            {{ form.add_shadow|as_crispy_field }}
+        </div>
+        <div class="col-4">
+            {{ form.semitransparency|as_crispy_field }}
+        </div>
+        <div class="col-4">
+            {{ form.channels|as_crispy_field }}
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col-4">
+            {{ form.roi|as_crispy_field }}
+        </div>
+        <div class="col-4">
+            {{ form.position|as_crispy_field }}
+        </div>
+    </div>
+</div>

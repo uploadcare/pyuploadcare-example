@@ -1,7 +1,7 @@
 # Pyuploadcare Example app
 
 This example project demonstrates the pyuploadcare capabilities.
-The project is based on Python 3.9 and Django 3.2.8.
+The project is based on Python 3.8 and Django 3.2.8.
 
 * [Installation](#installation)
   * [Using docker](#using-docker)
@@ -33,16 +33,21 @@ $ docker-compose build
 
 This command will build an image for the application.
 
+Also you need to prepare `secret.env` file with your public and secret keys
+as environmental variables for docker container to use
+
+```shell
+# 1. Copy example into your local `secret.env`
+cp secret.env.example secret.env
+
+# 2. Fill the values with your favourite editor
+```
+
 When the image is ready — up the containers with the following command.
+Migrations are applied on each container startup (look at `./app/start.sh`).
 
 ```console
 $ docker-compose up -d
-```
-
-Then, apply migrations:
-
-```console
-$ docker-compose run --rm uploadcare ./manage.py migrate
 ```
 
 Now, the application must be available in your web-browser, on `http://localhost:8000`
@@ -59,7 +64,7 @@ Make sure Python and Poetry are installed on your system. Fire command prompt an
 
 ```console
 $ python -V
-Python 3.9.6
+Python 3.8.9
 $ poetry --version
 Poetry version 1.1.9
 ```
@@ -113,9 +118,10 @@ The page shows all the files you have on Uploadcare servers. Each file has actio
 
 ![Files index](./img/files_list.png)
 
-To go to the `show` page, simply click on a filename:
+To go to the `show` page, simply click on a filename.
+There are blocks with readonly `appdata` and editable `metadata`:
 
-![Show file page](./img/file_info.png)
+![Show file page](./img/file_info_with_metadata.png)
 
 The `index` page also supports batch operations pages — batch store, batch delete, create file group from selected files.
 Just select multiple files and apply batch action.
@@ -127,6 +133,7 @@ Just select multiple files and apply batch action.
 File Groups section provides user interface to manage file groups on Uploadcare.
 
 The `index` page shows a minimal info about each group including ID and files count.
+There is also a button for deleting the `group`
 
 ![Index groups](./img/groups_list.png)
 
@@ -171,6 +178,58 @@ Video conversion works the same way but the form has some additional parameters 
 Conversion result page also includes information about how conversion is going.
 
 ![Convert video result](./img/video_conversion_status.png)
+
+
+### Addons
+
+User can execute operations that wrapped as addons.
+There are three implemented addons:
+- background removing 
+- virus scanning
+- object recognition
+
+For additional information proceed to [Uploadcare REST API Add-ons](https://uploadcare.com/api-refs/rest-api/v0.7.0/#tag/Add-Ons).
+
+
+#### Object recognition via AWS
+
+You only need to choose a file to start a recognition
+
+![Setup recogntion](./img/setup_addon_aws_recognition.png)
+
+After all corresponding part of file's `adddata` is rendered 
+and you can get into full file information if needed
+
+![Recogntion results](./img/addon_aws_execution_result.png)
+
+
+#### ClamAV Antivirus scan
+
+Choose a file to scan and additional action for revealed infected file
+
+![avscan recogntion](./img/setup_addon_av_clamav.png)
+
+Application renders corresponding part of file's `adddata` and the link to full file info page
+
+![avscan results](./img/addon_clamav_execution_result.png)
+
+
+#### Background removing
+
+Background removing has a bunch of options to select.
+
+![Setup background](./img/setup_addon_remove_bg.png)
+
+Usually it takes time to remove the background especially for large images,
+so you may see `IN_PROGRESS` status page with refresh button
+
+![Recogntion results](./img/addon_remove_bg_in_progress.png)
+
+Image with removed background will be put into new file, 
+so the result page has both links to the original file and created one
+
+![Background results](./img/addon_remove_bg_result_done.png)
+
 
 
 ### Webhooks
