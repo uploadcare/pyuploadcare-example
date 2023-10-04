@@ -138,4 +138,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 UPLOADCARE = {
     "pub_key": os.getenv("UPLOADCARE_PUBLIC_KEY", "demopublickey"),
     "secret": os.getenv("UPLOADCARE_SECRET_KEY", "demosecretkey"),
+    "legacy_widget": False,
 }
