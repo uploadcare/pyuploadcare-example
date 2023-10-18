@@ -498,7 +498,7 @@ django = ["Django (>=1.11)"]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
 reference = "feature/234-new_uploader"
-resolved_reference = "02285dc785ae9649e203430d793dfcf898894be9"
+resolved_reference = "d32c7c73eb5671b80d5cbd0eff29408a76397496"
 
 [[package]]
 name = "six"
