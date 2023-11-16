@@ -1,10 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from pyuploadcare.api.entities import WebhookEvent
 from pyuploadcare.api.metadata import META_KEY_MAX_LEN, META_VALUE_MAX_LEN, key_matcher
 from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.dj.forms import FileGroupField, ImageField
 from pyuploadcare.transformations.document import DocumentFormat
 from pyuploadcare.transformations.video import Quality, ResizeMode, VideoFormat
+from typing_extensions import get_args
 
 from uploadcare.models import Post
 
@@ -33,9 +35,7 @@ class FileMetadataKeyValueForm(forms.Form):
 
 class WebhookForm(forms.Form):
     target_url = forms.URLField()
-    event = forms.ChoiceField(
-        choices=[("file.uploaded", "file.uploaded"), ("file.infected", "file.infected")]
-    )
+    event = forms.ChoiceField(choices=[(item, item) for item in get_args(WebhookEvent)])
     is_active = forms.BooleanField(required=False)
     signing_secret = forms.CharField(required=False)
 
