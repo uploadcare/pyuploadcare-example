@@ -85,6 +85,7 @@ class DocumentConversionRequestForm(forms.Form):
     )
     page = forms.IntegerField(required=False)
     store = forms.BooleanField(required=False)
+    save_in_group = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
