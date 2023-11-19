@@ -15,6 +15,8 @@ class FileUploadForm(forms.Form):
     file = forms.FileField(required=False)
     url = forms.URLField(required=False)
     store = forms.ChoiceField(choices=[("auto", "auto"), ("yes", "yes"), ("no", "no")])
+    check_url_duplicates = forms.BooleanField(initial=True, required=False)
+    save_url_duplicates = forms.BooleanField(initial=True, required=False)
 
     def clean(self):
         cleaned_data = super().clean()
