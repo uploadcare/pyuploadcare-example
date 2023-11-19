@@ -12,6 +12,7 @@ from pyuploadcare.dj.client import get_uploadcare_client
 from pyuploadcare.exceptions import UploadcareException
 
 from uploadcare.forms import (
+    AddonAWSModerationRequestForm,
     AddonAWSRecognitionRequestForm,
     AddonClamAVScanRequestForm,
     AddonRemoveBGRequestForm,
@@ -23,6 +24,7 @@ logger = getLogger()
 
 addon_url_enum_mapping = {
     "aws_recognition": AddonLabels.AWS_LABEL_RECOGNITION,
+    "aws_moderation": AddonLabels.AWS_MODERATION_LABELS,
     "uc_clamav": AddonLabels.CLAM_AV,
     "remove_bg": AddonLabels.REMOVE_BG,
 }
@@ -31,6 +33,7 @@ addon_url_names = list(addon_url_enum_mapping.keys())
 
 addon_form_mapping = {
     AddonLabels.AWS_LABEL_RECOGNITION: None,
+    AddonLabels.AWS_MODERATION_LABELS: None,
     AddonLabels.CLAM_AV: None,
     AddonLabels.REMOVE_BG: None,
 }
@@ -78,6 +81,18 @@ class AddonExecutionAWSRecognitionRequestView(AddonExecutionBaseRequestView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         kwargs["is_aws_recognition"] = True
+        return kwargs
+
+
+class AddonExecutionAWSModerationRequestView(AddonExecutionBaseRequestView):
+    form_class = AddonAWSModerationRequestForm
+    addon_name = AddonLabels.AWS_MODERATION_LABELS
+    addon_url_label = "aws_moderation"
+    addon_url_name = "addon_aws_moderation_request"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs["is_aws_moderation"] = True
         return kwargs
 
 

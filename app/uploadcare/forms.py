@@ -116,6 +116,10 @@ class AddonAWSRecognitionRequestForm(AddonBaseRequestForm):
     pass
 
 
+class AddonAWSModerationRequestForm(AddonBaseRequestForm):
+    pass
+
+
 class AddonClamAVScanRequestForm(AddonBaseRequestForm):
     purge_infected = forms.BooleanField(required=False)
 

@@ -4,8 +4,8 @@
 <div class="col-8">
     {% if file.info.appdata %}
         {% for appdata_key, appdata_value in file.info.appdata.items %}
+            <h5>Appdata for "{{ appdata_key }}"</h5>
             {% if appdata_value %}
-                <h5>Appdata for "{{ appdata_key }}"</h5>
                 <div class="table-responsive" style="margin-left: 25px">
                     <table class="table table-condensed table-bordered table-hover mt-2">
                         <tbody>
@@ -52,9 +52,20 @@
                                     {%  include "files/appdata_details/_aws_recogntion.html" %}
                                 {% endif %}
 
+                                {% if appdata_key == "aws_rekognition_detect_moderation_labels" %}
+                                    <tr>
+                                        <th style="color: darkred; text-indent: 2em">
+                                            <i>Specific Data for result of labelling via AWS recognition moderation</i>
+                                        </th>
+                                        <td></td>
+                                    </tr>
+                                    {%  include "files/appdata_details/_aws_moderation.html" %}
+                                {% endif %}
                         </tbody>
                     </table>
                 </div>
+            {% else %}
+                <p>No data</p>
             {% endif %}
         {% endfor %}
     {% else %}

@@ -1,0 +1,39 @@
+{% load aws_filters %}
+
+<tr>
+    <th>Version of label model</th>
+    <td>{{ appdata_value.data.label_model_version }}</td>
+</tr>
+
+{% if appdata_value.data.labels %}
+    <tr style="color: darkgreen; text-indent: 2em">
+        <th>Labels</th>
+        <td></td>
+    </tr>
+    {% for label in appdata_value.data.labels %}
+        <tr>
+            <th>Label name</th>
+            <td>{{ label.name }}</td>
+        </tr>
+        <tr>
+            <th>Confidence</th>
+            <td>{{ label.confidence | floatformat:4 }}</td>
+        </tr>
+        <tr>
+            <th>Parent</th>
+            <td>{{ label.parent_name }}</td>
+        </tr>
+        <tr style="height: min-content">
+            <th> - </th>
+            <td> - </td>
+        </tr>
+
+    {% endfor %}
+
+{% else %}
+    <tr style="color: blue; text-indent: 1em">
+        <th>No labels</th>
+        <td></td>
+    </tr>
+
+{%  endif %}

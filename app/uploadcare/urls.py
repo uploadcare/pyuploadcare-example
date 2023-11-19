@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from uploadcare.views.addons import (
+    AddonExecutionAWSModerationRequestView,
     AddonExecutionAWSRecognitionRequestView,
     AddonExecutionClamAVRequestView,
     AddonExecutionRemoveBGRequestView,
@@ -112,6 +113,11 @@ urlpatterns = [
         "addons/aws_recognition/execute/",
         AddonExecutionAWSRecognitionRequestView.as_view(),
         name="addon_aws_recognition_request",
+    ),
+    path(
+        "addons/aws_moderation/execute/",
+        AddonExecutionAWSModerationRequestView.as_view(),
+        name="addon_aws_moderation_request",
     ),
     path(
         "addons/uc_clamav/execute/",

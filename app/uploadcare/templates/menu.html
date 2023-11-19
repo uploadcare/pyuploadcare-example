@@ -6,6 +6,7 @@
 {% url 'video_conversion_request' as video_conversion_request %}
 {% url 'document_conversion_request' as document_conversion_request %}
 {% url 'addon_aws_recognition_request' as addon_aws_recognition_request %}
+{% url 'addon_aws_moderation_request' as addon_aws_moderation_request %}
 {% url 'addon_uc_clamav_virus_scan' as addon_uc_clamav_virus_scan %}
 {% url 'addon_remove_bg' as addon_remove_bg %}
 
@@ -36,6 +37,9 @@
 
     <li class="nav-item">
         <a class="nav-link {% if request.path == addon_aws_recognition_request %} active {% endif %}" href="{{ addon_aws_recognition_request }}">Execute AWS Labels Recognition</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.path == addon_aws_moderation_request %} active {% endif %}" href="{{ addon_aws_moderation_request }}">Execute AWS Moderation Recognition</a>
     </li>
     <li class="nav-item">
         <a class="nav-link {% if request.path == addon_uc_clamav_virus_scan %} active {% endif %}" href="{{ addon_uc_clamav_virus_scan }}">Execute ClamAV virus scan</a>
