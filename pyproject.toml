@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyuploadcare-example"
-version = "0.2.0"
+version = "4.2.2"
 description = "Example project for Python library for Uploadcare.com"
 authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 
@@ -8,7 +8,7 @@ authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 python = "^3.8"
 Django = "^3.2.8"
 django-crispy-forms = "^1.13.0"
-pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "main"}
+pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "v4.2.2"}
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"

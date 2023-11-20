@@ -92,6 +92,8 @@ class FileUploadView(FormView):
         file = form.cleaned_data["file"]
         url = form.cleaned_data["url"]
         store = form.cleaned_data["store"]
+        check_url_duplicates = form.cleaned_data["check_url_duplicates"]
+        save_url_duplicates = form.cleaned_data["save_url_duplicates"]
 
         uploadcare = get_uploadcare_client()
 
@@ -99,7 +101,12 @@ class FileUploadView(FormView):
             if file:
                 file = uploadcare.upload(file, size=file.size, store=store)
             else:
-                file = uploadcare.upload(url, store=store)
+                file = uploadcare.upload_from_url_sync(
+                    url,
+                    store=store,
+                    check_duplicates=check_url_duplicates,
+                    save_duplicates=save_url_duplicates,
+                )
         except UploadcareException as err:
             messages.error(self.request, f"Unable to upload file: {err}")
             return redirect("file_list")

@@ -88,7 +88,9 @@ class DocumentConversionRequestView(FormView):
         path = transformation.path(file_id)
 
         try:
-            response = uploadcare.document_convert_api.convert([path], store=data["store"])
+            response = uploadcare.document_convert_api.convert(
+                [path], store=data["store"], save_in_group=data["save_in_group"]
+            )
         except UploadcareException as err:
             messages.error(self.request, f"Unable to convert document: {err}")
             return redirect("document_conversion_request")
