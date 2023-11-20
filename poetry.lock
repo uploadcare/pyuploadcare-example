@@ -497,8 +497,8 @@ django = ["Django (>=1.11)"]
 [package.source]
 type = "git"
 url = "https://github.com/uploadcare/pyuploadcare"
-reference = "bugfix/260-allow_dicts_for_addon_execution_params"
-resolved_reference = "5b713a5f72e613ededfa49ee8b94c7c1620e5d8f"
+reference = "v4.2.2"
+resolved_reference = "f491abbfa7b009e5148844ff7e5579ad1d3084a1"
 
 [[package]]
 name = "six"
@@ -574,4 +574,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "c61d64fcb457a0f5582c65f3b9228020c472e2fcfc75e02d5b279f5b230829e3"
+content-hash = "c1d113b1ef0077adcd77a0896c285b857cfc8ec1e4495e2e2c72a180f006ecae"
