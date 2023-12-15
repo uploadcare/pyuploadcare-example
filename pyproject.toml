@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyuploadcare-example"
-version = "0.2.0"
+version = "5.0.0"
 description = "Example project for Python library for Uploadcare.com"
 authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 
