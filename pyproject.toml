@@ -5,10 +5,10 @@ description = "Example project for Python library for Uploadcare.com"
 authors = ["Uploadcare Inc <hello@uploadcare.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.1"
 Django = "^3.2.8"
 django-crispy-forms = "^1.13.0"
-pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", rev = "feature/234-new_uploader"}
+pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", tag = "v5.0.0"}
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
@@ -22,7 +22,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 100
-target-version = ['py36']
+target-version = ['py38']
 exclude = '''
 (
   \.eggs
