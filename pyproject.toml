@@ -14,7 +14,7 @@ pyuploadcare = {git = "https://github.com/uploadcare/pyuploadcare", tag = "v5.0.
 [tool.poetry.dev-dependencies]
 flake8 = "^7.0.0"
 mypy = "^1.8.0"
-black = "^24.1.1"
+black = "^24.3.0"
 isort = "^5.13.2"
 
 [build-system]
