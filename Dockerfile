@@ -6,10 +6,10 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 WORKDIR /app
 
+COPY app/ /app/
 COPY pyproject.toml uv.lock /app/
 
-ENV UV_SYSTEM_PYTHON=1
 RUN uv sync --frozen --no-dev --no-install-project
 
 EXPOSE 8000
-ENTRYPOINT /app/start.sh
+ENTRYPOINT ["/app/start.sh"]
