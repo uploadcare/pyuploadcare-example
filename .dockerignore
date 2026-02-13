@@ -1,0 +1,3 @@
+# Avoid copying host venv into image (platform-specific, would overwrite image .venv)
+app/.venv
+.venv

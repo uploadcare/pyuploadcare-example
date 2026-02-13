@@ -2,13 +2,14 @@ FROM python:3.12-slim-bookworm
 
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir --upgrade pip setuptools poetry
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock /app/
+COPY app/ /app/
+COPY pyproject.toml uv.lock /app/
 
-RUN poetry config virtualenvs.create false || true && poetry install
+RUN uv sync --frozen --no-dev --no-install-project
 
 EXPOSE 8000
-ENTRYPOINT /app/start.sh
+ENTRYPOINT ["/app/start.sh"]

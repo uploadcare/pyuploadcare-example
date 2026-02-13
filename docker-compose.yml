@@ -1,5 +1,4 @@
-version: "3.7"
-
+name: pyuploadcare-example
 services:
 
   uploadcare:
@@ -8,7 +7,5 @@ services:
     build:
       context: "."
       dockerfile: Dockerfile
-    volumes:
-      - ./app:/app
     ports:
       - "8000:8000"

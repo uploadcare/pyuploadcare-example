@@ -60,35 +60,35 @@ First of all, clone this repository:
 $ git clone git@github.com:uploadcare/pyuploadcare-example.git
 ```
 
-Make sure Python and Poetry are installed on your system. Fire command prompt and run command:
+Make sure Python 3.12+ and [uv](https://docs.astral.sh/uv/) are installed. From the project root:
 
 ```console
 $ python -V
-Python 3.8.9
-$ poetry --version
-Poetry version 1.1.9
+Python 3.12.x
+$ uv --version
+uv x.x.x
 ```
 
-If Python or Poetry are not installed, check out following links with instructions, how to install those:
-* [Install python](https://www.python.org/downloads/)
-* [Install Poetry](https://python-poetry.org/docs/#installation)
+If needed:
+* [Install Python](https://www.python.org/downloads/)
+* [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
 
-Then install dependencies:
+Then install dependencies (including dev tools):
 
 ```console
-$ poetry install
+$ uv sync --all-extras --no-install-project
 ```
 
 After dependencies are installed, apply database migrations:
 
 ```console
-$ poetry run python app/manage.py migrate
+$ uv run python app/manage.py migrate
 ```
 
 Now, you can run the server:
 
 ```console
-$ poetry run python app/manage.py runserver
+$ uv run python app/manage.py runserver
 ```
 
 and see the application available in your web-browser, on `http://localhost:8000`

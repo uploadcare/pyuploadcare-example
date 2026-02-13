@@ -1,9 +1,9 @@
 format:
-	poetry run black .
-	poetry run isort .
+	uv run black .
+	uv run isort .
 
 lint:
-	poetry run black --check .
-	poetry run isort --check .
-	poetry run flake8 .
-	poetry run mypy --namespace-packages --show-error-codes ./app
+	uv run black --check .
+	uv run isort --check .
+	uv run flake8 .
+	uv run mypy --namespace-packages --show-error-codes ./app
