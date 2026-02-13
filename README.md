@@ -1,7 +1,7 @@
 # Pyuploadcare Example app
 
 This example project demonstrates the pyuploadcare capabilities.
-The project is based on Python 3.8 and Django 3.2.8.
+The project is based on Python 3.12 and Django 4.2.10.
 
 * [Installation](#installation)
   * [Using docker](#using-docker)
