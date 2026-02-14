@@ -1,23 +1,28 @@
 # Pyuploadcare Example app
 
 This example project demonstrates the pyuploadcare capabilities.
-The project is based on Python 3.12 and Django 4.2.10.
+The project is based on Python 3.14 and Django 4.2.10.
 
-* [Installation](#installation)
-  * [Using docker](#using-docker)
-  * [Without docker](#without-docker)
-* [Usage](#usage)
-  * [Configuration](#configuration)
-  * [Project section](#project-section)
-  * [Files section](#files-section)
-  * [File Groups section](#file-groups-section)
-  * [Files uploading](#files-uploading)
-  * [Conversion](#conversion)
-    * [Documents conversion](#documents-conversion)
-    * [Video conversion](#video-conversion)
-  * [Webhooks](#webhooks)
-  * [Posts section](#posts-section)
-* [Useful links](#useful-links)
+- [Pyuploadcare Example app](#pyuploadcare-example-app)
+  - [Installation](#installation)
+    - [Using Docker](#using-docker)
+    - [Without docker](#without-docker)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+    - [Project section](#project-section)
+    - [Files section](#files-section)
+    - [File Groups section](#file-groups-section)
+    - [Files uploading](#files-uploading)
+    - [Conversion](#conversion)
+      - [Documents conversion](#documents-conversion)
+      - [Video conversion](#video-conversion)
+    - [Addons](#addons)
+      - [Object recognition via AWS](#object-recognition-via-aws)
+      - [ClamAV Antivirus scan](#clamav-antivirus-scan)
+      - [Background removing](#background-removing)
+    - [Webhooks](#webhooks)
+    - [Posts section](#posts-section)
+  - [Useful links](#useful-links)
 
 ## Installation
 
@@ -184,7 +189,7 @@ Conversion result page also includes information about how conversion is going.
 
 User can execute operations that wrapped as addons.
 There are three implemented addons:
-- background removing 
+- background removing
 - virus scanning
 - object recognition
 
@@ -197,7 +202,7 @@ You only need to choose a file to start a recognition
 
 ![Setup recogntion](./img/setup_addon_aws_recognition.png)
 
-After all corresponding part of file's `adddata` is rendered 
+After all corresponding part of file's `adddata` is rendered
 and you can get into full file information if needed
 
 ![Recogntion results](./img/addon_aws_execution_result.png)
@@ -225,7 +230,7 @@ so you may see `IN_PROGRESS` status page with refresh button
 
 ![Recogntion results](./img/addon_remove_bg_in_progress.png)
 
-Image with removed background will be put into new file, 
+Image with removed background will be put into new file,
 so the result page has both links to the original file and created one
 
 ![Background results](./img/addon_remove_bg_result_done.png)
@@ -273,10 +278,10 @@ To create a new post, click on the `Add` button in posts index page. The post fo
 ![Create a post](./img/post_create.png)
 
 ## Useful links
-* [Uploadcare documentation](https://uploadcare.com/docs/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)  
-* [Upload API reference](https://uploadcare.com/api-refs/upload-api/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)  
-* [REST API reference](https://uploadcare.com/api-refs/rest-api/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)  
-* [Contributing guide](https://github.com/uploadcare/.github/blob/master/CONTRIBUTING.md)  
-* [Security policy](https://github.com/uploadcare/pyuploadcare/security/policy)  
+* [Uploadcare documentation](https://uploadcare.com/docs/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)
+* [Upload API reference](https://uploadcare.com/api-refs/upload-api/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)
+* [REST API reference](https://uploadcare.com/api-refs/rest-api/?utm_source=github&utm_medium=referral&utm_campaign=pyuploadcare)
+* [Contributing guide](https://github.com/uploadcare/.github/blob/master/CONTRIBUTING.md)
+* [Security policy](https://github.com/uploadcare/pyuploadcare/security/policy)
 * [Support](https://github.com/uploadcare/.github/blob/master/SUPPORT.md)
 * [A Python library for Uploadcare service](https://github.com/uploadcare/pyuploadcare)
